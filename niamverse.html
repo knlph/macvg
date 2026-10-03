@@ -1,0 +1,1644 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="author" content="Niam">
+<title>Niamverse</title>
+<!-- Niamverse. Made by Niam. -->
+<style>
+:root{
+  --bg:#f4f5fb;--surface:#fff;--surface-2:#f2f3fb;--ink:#12152b;--ink-2:#4b5169;--muted:#868ca6;--line:#e7e9f3;
+  --brand:#5b5ef4;--brand-2:#8b5cf6;--brand-soft:color-mix(in srgb,var(--brand) 11%,var(--surface));
+  --grad:linear-gradient(135deg,var(--brand),var(--brand-2));
+  --ok:#16a34a;--danger:#ef4444;--r:18px;--cw:188px;
+  --blob1:#c7d2fe;--blob2:#fbcfe8;--blob3:#bae6fd;--glass:rgba(255,255,255,.74);
+  --sh-sm:0 1px 2px rgba(18,21,43,.05),0 2px 8px rgba(18,21,43,.04);
+  --sh-md:0 10px 32px rgba(52,56,120,.14);--sh-lg:0 26px 70px rgba(30,34,90,.26);
+  color-scheme:light;
+  font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Inter,Roboto,"Helvetica Neue",Arial,sans-serif;
+}
+[data-theme=dark]{--bg:#0d0f1f;--surface:#161a2e;--surface-2:#1d2240;--ink:#eef0ff;--ink-2:#b4b9d6;--muted:#7d84a8;--line:#272c4d;--blob1:#2a2f7a;--blob2:#5b1d6b;--blob3:#134e6b;--glass:rgba(22,26,46,.76);--sh-sm:0 1px 2px rgba(0,0,0,.3),0 2px 8px rgba(0,0,0,.25);--sh-md:0 10px 32px rgba(0,0,0,.45);--sh-lg:0 26px 70px rgba(0,0,0,.6);color-scheme:dark}
+[data-theme=midnight]{--bg:#09051a;--surface:#130c2a;--surface-2:#1c1240;--ink:#f6efff;--ink-2:#c4b4ef;--muted:#8a78c0;--line:#2f2060;--blob1:#5b21b6;--blob2:#be185d;--blob3:#0e7490;--glass:rgba(19,12,42,.76);--sh-sm:0 1px 2px rgba(0,0,0,.4),0 2px 10px rgba(120,60,255,.12);--sh-md:0 12px 36px rgba(100,40,255,.28);--sh-lg:0 26px 70px rgba(80,20,200,.4);color-scheme:dark}
+[data-theme=sunset]{--bg:#fff3ea;--surface:#fffdfb;--surface-2:#ffefe3;--ink:#2b1410;--ink-2:#6b4036;--muted:#a67a6e;--line:#f5dccd;--blob1:#fed7aa;--blob2:#fecdd3;--blob3:#fde68a;--glass:rgba(255,250,245,.76)}
+[data-theme=gold]{--bg:#fffaeb;--surface:#fffefa;--surface-2:#fff4d6;--ink:#2a2108;--ink-2:#6a5a22;--muted:#a8944f;--line:#f1e3b3;--blob1:#fde68a;--blob2:#fed7aa;--blob3:#fef3c7;--glass:rgba(255,252,240,.78)}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;line-height:1.45;min-height:100vh;transition:background .3s,color .3s}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+[hidden]{display:none!important}
+:focus-visible{outline:3px solid color-mix(in srgb,var(--brand) 50%,transparent);outline-offset:2px;border-radius:10px}
+.ic{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.bg{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none}
+.bg i{position:absolute;width:46vmax;height:46vmax;border-radius:50%;filter:blur(90px);opacity:.55;animation:drift 26s ease-in-out infinite alternate}
+.bg i:nth-child(1){background:var(--blob1);left:-12vmax;top:-14vmax}
+.bg i:nth-child(2){background:var(--blob2);right:-14vmax;top:8vmax;animation-delay:-8s}
+.bg i:nth-child(3){background:var(--blob3);left:28vw;bottom:-22vmax;animation-delay:-15s}
+@keyframes drift{to{transform:translate(6vmax,4vmax) scale(1.12)}}
+body.nomotion .bg i,body.nomotion *{animation:none!important}
+.app{position:relative;z-index:1;display:flex;min-height:100vh}
+
+/* rail */
+.rail{width:218px;flex:none;position:sticky;top:0;height:100vh;padding:18px 12px;display:flex;flex-direction:column;gap:4px;background:var(--glass);backdrop-filter:blur(18px) saturate(1.5);-webkit-backdrop-filter:blur(18px) saturate(1.5);border-right:1px solid var(--line);z-index:20}
+.brand{display:flex;align-items:center;gap:11px;padding:6px 10px 18px;border:0;background:none;text-align:left;font-weight:800;font-size:20px;letter-spacing:-.04em}
+.logo-mark{width:38px;height:38px;border-radius:12px;background:var(--grad);display:grid;place-items:center;color:#fff;box-shadow:0 8px 20px color-mix(in srgb,var(--brand) 40%,transparent);transition:transform .3s}
+.brand:hover .logo-mark{transform:rotate(-8deg) scale(1.06)}
+.logo-mark svg{width:18px;height:18px;fill:#fff;stroke:none}
+.rail-btn{display:flex;align-items:center;gap:12px;width:100%;padding:11px 12px;border:0;background:none;border-radius:13px;color:var(--ink-2);font-weight:650;font-size:14.5px;text-align:left;transition:background .15s,color .15s,transform .15s}
+.rail-btn:hover{background:var(--surface-2);color:var(--ink);transform:translateX(2px)}
+.rail-btn[aria-current=page]{background:var(--brand-soft);color:var(--brand)}
+.rail-btn .badge{margin-left:auto;font-size:11px;font-weight:800;background:var(--surface-2);color:var(--muted);border-radius:99px;padding:1px 8px}
+.rail-btn[aria-current=page] .badge{background:var(--brand);color:#fff}
+.rail-foot{margin-top:auto;padding:12px 10px;font-size:12px;color:var(--muted);line-height:1.6}
+.content{flex:1;min-width:0}
+.top{position:sticky;top:0;z-index:30;display:flex;align-items:center;gap:12px;padding:14px 28px;background:var(--glass);backdrop-filter:blur(16px) saturate(1.5);-webkit-backdrop-filter:blur(16px) saturate(1.5);border-bottom:1px solid var(--line)}
+.search{position:relative;flex:1;max-width:620px}
+.search .ic{position:absolute;left:15px;top:50%;transform:translateY(-50%);color:var(--muted);pointer-events:none}
+.search input{width:100%;height:46px;border-radius:15px;border:1px solid var(--line);background:var(--surface-2);padding:0 78px 0 46px;font-size:15px;outline:none;transition:background .15s,border-color .15s,box-shadow .15s}
+.search input::placeholder{color:var(--muted)}
+.search input:focus{background:var(--surface);border-color:var(--brand);box-shadow:0 0 0 5px color-mix(in srgb,var(--brand) 16%,transparent)}
+.kbd{font-size:11.5px;font-weight:700;color:var(--muted);background:var(--surface);border:1px solid var(--line);border-bottom-width:2px;border-radius:7px;padding:2px 7px;white-space:nowrap}
+.search .kbd{position:absolute;right:12px;top:50%;transform:translateY(-50%)}
+.xbtn{position:absolute;right:10px;top:50%;transform:translateY(-50%);width:28px;height:28px;border:0;border-radius:50%;background:var(--line);color:var(--ink-2);display:grid;place-items:center}
+.xbtn .ic{position:static;transform:none;width:14px;height:14px;color:inherit}
+.spacer{flex:1}
+.pillbtn{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);background:var(--surface);border-radius:14px;padding:10px 14px;font-weight:700;font-size:13.5px;box-shadow:var(--sh-sm);transition:transform .15s,box-shadow .15s,border-color .15s;white-space:nowrap}
+.pillbtn:hover{transform:translateY(-2px);box-shadow:var(--sh-md);border-color:color-mix(in srgb,var(--brand) 35%,var(--line))}
+.crushbtn{background:var(--grad);color:#fff;border:0;box-shadow:0 8px 22px color-mix(in srgb,var(--brand) 38%,transparent)}
+.crushbtn:hover{box-shadow:0 12px 28px color-mix(in srgb,var(--brand) 50%,transparent)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:13px;padding:11px 18px;font-weight:750;background:var(--grad);color:#fff;box-shadow:0 8px 20px color-mix(in srgb,var(--brand) 32%,transparent);transition:transform .15s,box-shadow .15s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 12px 26px color-mix(in srgb,var(--brand) 42%,transparent)}
+.btn.ghost{background:var(--surface);color:var(--ink);border:1px solid var(--line);box-shadow:var(--sh-sm)}
+.btn.danger{background:var(--danger);box-shadow:0 8px 20px rgba(239,68,68,.3)}
+.btn.sm{padding:8px 13px;font-size:13px;border-radius:11px}
+.pages{padding:26px 28px 20px;max-width:1360px;margin:0 auto}
+.page{animation:pageIn .4s cubic-bezier(.2,.8,.2,1) both}
+@keyframes pageIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+h1.pt{margin:0;font-size:clamp(26px,3.4vw,36px);letter-spacing:-.04em;line-height:1.1;font-weight:800}
+.psub{margin:6px 0 0;color:var(--ink-2);font-size:15.5px}
+.sec-h{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin:30px 0 12px}
+.sec-h h2{margin:0;font-size:19px;letter-spacing:-.025em}
+.sec-h span,.sec-h button{font-size:13px;color:var(--muted)}
+.sec-h button{border:0;background:none;font-weight:700;color:var(--brand)}
+.foot{margin-top:50px;padding:24px 28px 40px;text-align:center;color:var(--muted);font-size:13.5px;border-top:1px solid var(--line)}
+.foot b{color:var(--ink)}
+.foot .row{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:10px}
+.pill{display:inline-flex;align-items:center;gap:6px;padding:4px 11px;border-radius:99px;background:var(--brand-soft);color:var(--brand);font-size:12px;font-weight:750;white-space:nowrap;border:0}
+#footHeart{border:0;background:none;padding:0 2px;color:#f43f5e;font-size:15px;transition:transform .2s}
+#footHeart:hover{transform:scale(1.3)}
+
+/* hero + home */
+.hero{position:relative;overflow:hidden;border-radius:26px;padding:34px 34px 30px;background:var(--grad);color:#fff;box-shadow:0 22px 50px color-mix(in srgb,var(--brand) 32%,transparent)}
+.hero::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 85% 10%,rgba(255,255,255,.28),transparent 45%),radial-gradient(rgba(255,255,255,.16) 1.2px,transparent 1.5px) 0 0/18px 18px}
+.hero>*{position:relative}
+.hero h1{margin:0;font-size:clamp(30px,4.6vw,52px);letter-spacing:-.045em;line-height:1.02;font-weight:850}
+.hero p{margin:12px 0 0;max-width:620px;font-size:16.5px;opacity:.92}
+.hero .cta{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.hero .btn{background:#fff;color:var(--brand);box-shadow:0 10px 26px rgba(0,0,0,.18)}
+.hero .btn.ghost{background:rgba(255,255,255,.18);color:#fff;border:1px solid rgba(255,255,255,.4);box-shadow:none;backdrop-filter:blur(6px)}
+.chiprow{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+.stat{display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.3);border-radius:99px;padding:6px 13px;font-size:13px;font-weight:650}
+.two{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:18px;margin-top:20px}
+.gotd{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:0;background:var(--surface);border:1px solid var(--line);border-radius:22px;overflow:hidden;box-shadow:var(--sh-sm)}
+.gotd .art{aspect-ratio:auto;min-height:190px}
+.gotd .mono{font-size:72px}
+.gotd .info{padding:22px;display:flex;flex-direction:column;justify-content:center;gap:8px}
+.gotd .lbl{font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--brand)}
+.gotd h3{margin:0;font-size:24px;letter-spacing:-.03em}
+.gotd p{margin:0;color:var(--muted);font-size:14px}
+.box{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:20px;box-shadow:var(--sh-sm)}
+.box h3{margin:0 0 12px;font-size:16px;letter-spacing:-.02em}
+.bar-bg{height:9px;border-radius:99px;background:var(--surface-2);overflow:hidden}
+.bar-bg i{display:block;height:100%;border-radius:99px;background:var(--grad);transition:width .6s cubic-bezier(.2,.8,.2,1)}
+.lvl{display:flex;align-items:center;gap:14px;margin-bottom:14px}
+.lvl .n{width:54px;height:54px;border-radius:17px;background:var(--grad);color:#fff;display:grid;place-items:center;font-size:22px;font-weight:850;box-shadow:0 8px 20px color-mix(in srgb,var(--brand) 35%,transparent)}
+.lvl small{color:var(--muted)}
+.cats{display:grid;grid-template-columns:repeat(auto-fill,minmax(176px,1fr));gap:14px}
+.cat-tile{position:relative;overflow:hidden;text-align:left;border:0;border-radius:20px;padding:18px;color:#fff;min-height:104px;display:flex;flex-direction:column;justify-content:space-between;box-shadow:var(--sh-sm);transition:transform .25s cubic-bezier(.2,.8,.2,1),box-shadow .25s}
+.cat-tile::after{content:"";position:absolute;right:-26px;bottom:-34px;width:110px;height:110px;border-radius:50%;background:rgba(255,255,255,.18)}
+.cat-tile:hover{transform:translateY(-5px) rotate(-.6deg);box-shadow:var(--sh-md)}
+.cat-tile .e{font-size:28px}
+.cat-tile b{font-size:15.5px;letter-spacing:-.01em}
+.cat-tile small{opacity:.85;font-weight:600}
+
+/* chips, toolbar, grid, cards */
+.chips{display:flex;gap:8px;overflow-x:auto;padding:4px 2px 8px;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip-b{flex:none;display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);background:var(--surface);border-radius:99px;padding:8px 14px;font-weight:650;font-size:13.5px;color:var(--ink-2);box-shadow:var(--sh-sm);transition:transform .15s,background .15s,color .15s,border-color .15s}
+.chip-b:hover{transform:translateY(-1px);border-color:color-mix(in srgb,var(--brand) 35%,var(--line));color:var(--ink)}
+.chip-b small{font-size:11.5px;font-weight:750;color:var(--muted);background:var(--surface-2);border-radius:99px;padding:1px 7px}
+.chip-b[aria-pressed=true]{background:var(--grad);border-color:transparent;color:#fff;box-shadow:0 8px 20px color-mix(in srgb,var(--brand) 34%,transparent)}
+.chip-b[aria-pressed=true] small{background:rgba(255,255,255,.25);color:#fff}
+.letters{display:flex;gap:4px;flex-wrap:wrap;margin:6px 0 2px}
+.letters button{min-width:30px;height:30px;border:1px solid var(--line);background:var(--surface);border-radius:9px;font-weight:750;font-size:12.5px;color:var(--ink-2);transition:all .15s}
+.letters button:hover{border-color:var(--brand);color:var(--brand)}
+.letters button[aria-pressed=true]{background:var(--brand);border-color:var(--brand);color:#fff}
+.letters button:disabled{opacity:.3;cursor:default}
+.toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:18px 0 14px;flex-wrap:wrap}
+.toolbar h2{margin:0;font-size:19px;letter-spacing:-.025em}
+.toolbar .sub{color:var(--muted);font-size:13.5px;margin-left:8px;font-weight:500}
+.tools{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.sel{appearance:none;-webkit-appearance:none;border:1px solid var(--line);background:var(--surface) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none' stroke='%23868ca6' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M1 1.5l5 5 5-5'/%3E%3C/svg%3E") no-repeat right 12px center;border-radius:12px;padding:9px 34px 9px 14px;font-weight:650;font-size:13.5px;box-shadow:var(--sh-sm)}
+.seg{display:inline-flex;border:1px solid var(--line);background:var(--surface);border-radius:12px;padding:3px;box-shadow:var(--sh-sm)}
+.seg button{border:0;background:none;border-radius:9px;padding:6px 11px;font-weight:700;font-size:13px;color:var(--ink-2)}
+.seg button[aria-pressed=true]{background:var(--brand);color:#fff}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(var(--cw),1fr));gap:18px}
+.strip{display:grid;grid-auto-flow:column;grid-auto-columns:var(--cw);gap:18px;overflow-x:auto;padding:6px 4px 16px;scrollbar-width:thin;scroll-snap-type:x proximity}
+.strip>*{scroll-snap-align:start}
+.card{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;box-shadow:var(--sh-sm);cursor:pointer;transition:transform .2s ease-out,box-shadow .28s,border-color .28s;animation:cardIn .45s ease both;transform:perspective(700px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) translateZ(0);will-change:transform}
+@keyframes cardIn{from{opacity:0;transform:translateY(12px)}to{opacity:1}}
+.card:hover,.card:focus-visible{box-shadow:var(--sh-md);border-color:color-mix(in srgb,var(--brand) 30%,var(--line));z-index:2}
+.card::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .25s;background:radial-gradient(240px circle at var(--mx,50%) var(--my,0%),rgba(255,255,255,.28),transparent 60%)}
+.card:hover::after{opacity:1}
+.art{position:relative;aspect-ratio:16/10;background:linear-gradient(135deg,var(--a),var(--b));display:grid;place-items:center;overflow:hidden}
+.art::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 18% 12%,rgba(255,255,255,.42),transparent 46%),radial-gradient(rgba(255,255,255,.2) 1.2px,transparent 1.5px) 0 0/15px 15px}
+.art::after{content:"";position:absolute;right:-30px;bottom:-40px;width:120px;height:120px;border-radius:50%;background:rgba(255,255,255,.16)}
+.mono{position:relative;z-index:1;font-size:46px;font-weight:850;letter-spacing:-.05em;color:#fff;text-shadow:0 4px 18px rgba(0,0,0,.24);transition:transform .35s cubic-bezier(.2,.8,.2,1)}
+.card:hover .mono{transform:scale(1.12) rotate(-3deg)}
+.tag{position:absolute;z-index:2;left:10px;top:10px;font-size:11px;font-weight:750;padding:3px 9px;border-radius:99px;background:rgba(255,255,255,.92);color:#3b405c}
+body.notags .tag{display:none}
+.pc{position:absolute;z-index:2;left:10px;bottom:10px;font-size:11px;font-weight:800;padding:2px 8px;border-radius:99px;background:rgba(0,0,0,.34);color:#fff;backdrop-filter:blur(4px)}
+.fav{position:absolute;z-index:3;right:9px;top:9px;width:32px;height:32px;border:0;border-radius:50%;background:rgba(255,255,255,.93);display:grid;place-items:center;color:#a7adc4;transition:transform .15s,color .15s}
+.fav:hover{transform:scale(1.14);color:var(--danger)}
+.fav svg{width:17px;height:17px;fill:currentColor}
+.fav[aria-pressed=true]{color:var(--danger);animation:pop .35s}
+@keyframes pop{50%{transform:scale(1.35)}}
+.play{position:absolute;z-index:3;right:10px;bottom:10px;display:inline-flex;align-items:center;gap:5px;background:#fff;color:var(--brand);font-weight:800;font-size:12.5px;padding:6px 12px 6px 9px;border-radius:99px;box-shadow:0 6px 16px rgba(0,0,0,.2);opacity:0;transform:translateY(8px);transition:opacity .2s,transform .2s}
+.play svg{width:14px;height:14px;fill:currentColor}
+.card:hover .play,.card:focus-visible .play{opacity:1;transform:none}
+.meta{padding:12px 14px 14px}
+.meta h3{margin:0;font-size:14.5px;line-height:1.3;font-weight:720;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:2.6em;letter-spacing:-.01em}
+.meta p{margin:6px 0 0;font-size:12px;color:var(--muted);font-weight:550;display:flex;justify-content:space-between;gap:6px}
+.meta .stars{color:#f59e0b;font-weight:800}
+mark{background:#ffe08a;color:#3a2a00;border-radius:4px;padding:0 1px}
+.grid.list{grid-template-columns:1fr;gap:10px}
+.grid.list .card{display:flex;align-items:center;gap:0;border-radius:16px}
+.grid.list .art{width:110px;aspect-ratio:16/10;flex:none}
+.grid.list .mono{font-size:30px}
+.grid.list .tag,.grid.list .play,.grid.list .pc{display:none}
+.grid.list .meta{flex:1;padding:8px 16px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.grid.list .meta h3{min-height:0;-webkit-line-clamp:1}
+.grid.list .meta p{margin:0}
+.grid.list .fav{position:static;margin-right:14px;background:var(--surface-2)}
+.grid.list .card:hover{transform:translateX(4px)!important}
+.skel{height:214px;border-radius:var(--r);background:linear-gradient(100deg,var(--surface-2) 30%,var(--surface) 50%,var(--surface-2) 70%) 0 0/300% 100%;animation:sh 1.3s linear infinite}
+@keyframes sh{to{background-position:-300% 0}}
+.state{text-align:center;padding:50px 16px;color:var(--ink-2)}
+.state .big{font-size:44px}
+.state h3{margin:8px 0 4px;font-size:19px;color:var(--ink)}
+.state p{margin:0 auto 16px;max-width:460px;color:var(--muted)}
+.more{display:flex;justify-content:center;margin:26px 0 6px}
+.glitter{position:absolute;right:30px;top:14px;border:0;background:none;color:var(--brand);font-size:12px;opacity:.28;animation:twinkle 2.4s ease-in-out infinite;padding:6px}
+.glitter:hover{opacity:1}
+@keyframes twinkle{50%{transform:scale(1.7) rotate(25deg);opacity:.7}}
+.libhead{position:relative}
+
+/* lists */
+.rows{display:grid;gap:10px}
+.row{display:flex;align-items:center;gap:14px;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:10px 14px 10px 10px;box-shadow:var(--sh-sm);cursor:pointer;transition:transform .15s,box-shadow .2s}
+.row:hover{transform:translateX(4px);box-shadow:var(--sh-md)}
+.tile{width:52px;height:52px;border-radius:14px;background:linear-gradient(135deg,var(--a),var(--b));color:#fff;display:grid;place-items:center;font-weight:850;font-size:18px;flex:none;text-shadow:0 2px 8px rgba(0,0,0,.25)}
+.row .t{flex:1;min-width:0}
+.row .t b{display:block;font-size:14.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.row .t small{color:var(--muted)}
+.row .x{color:var(--muted);font-size:12.5px;white-space:nowrap}
+.orig-card{display:grid;grid-template-columns:150px 1fr auto;gap:18px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:14px;box-shadow:var(--sh-sm);transition:transform .2s,box-shadow .2s}
+.orig-card:hover{transform:translateY(-3px);box-shadow:var(--sh-md)}
+.orig-card .tile{width:150px;height:96px;border-radius:16px;font-size:40px}
+.orig-card h3{margin:0;font-size:18px;letter-spacing:-.02em}
+.orig-card p{margin:4px 0 0;color:var(--muted);font-size:14px}
+pre.code{margin:12px 0 0;background:#12152b;color:#d6dbff;border-radius:14px;padding:16px;overflow:auto;font-size:12.5px;line-height:1.6;max-height:300px}
+
+/* profile, achievements, treasure */
+.stats{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:14px;margin:18px 0}
+.stat-c{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:16px;box-shadow:var(--sh-sm)}
+.stat-c small{color:var(--muted);font-weight:650}
+.stat-c b{display:block;font-size:26px;letter-spacing:-.03em;margin-top:2px}
+.bars{display:grid;gap:10px}
+.bars .b{display:grid;grid-template-columns:130px 1fr 60px;gap:10px;align-items:center;font-size:13.5px}
+.bars .b span:last-child{text-align:right;color:var(--muted);font-weight:650}
+.ach-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px}
+.ach{display:flex;gap:12px;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:14px;box-shadow:var(--sh-sm);transition:transform .2s}
+.ach:hover{transform:translateY(-2px)}
+.ach .e{width:46px;height:46px;border-radius:14px;background:var(--grad);display:grid;place-items:center;font-size:22px;flex:none}
+.ach.locked{opacity:.55}
+.ach.locked .e{background:var(--surface-2);filter:grayscale(1)}
+.ach b{font-size:14px}
+.ach p{margin:2px 0 6px;color:var(--muted);font-size:12.5px}
+.ach .bar-bg{height:6px}
+.gems{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:14px;margin-top:16px}
+.gem{background:var(--surface);border:1px dashed var(--line);border-radius:20px;padding:16px;text-align:center;box-shadow:var(--sh-sm);transition:transform .3s}
+.gem .e{font-size:38px;filter:grayscale(1);opacity:.35}
+.gem p{margin:6px 0 0;font-size:13px;color:var(--ink-2);font-style:italic}
+.gem.found{border:1px solid color-mix(in srgb,var(--brand) 40%,var(--line));background:var(--brand-soft)}
+.gem.found .e{filter:none;opacity:1;animation:pop .6s}
+.gem.found p{font-style:normal;font-weight:700;color:var(--brand)}
+.vault{margin-top:20px;display:flex;align-items:center;gap:18px;flex-wrap:wrap;background:var(--surface);border:1px solid var(--line);border-radius:24px;padding:22px;box-shadow:var(--sh-sm)}
+.vault .e{font-size:44px}
+.vault h3{margin:0;font-size:19px}
+.vault p{margin:4px 0 0;color:var(--muted)}
+
+/* settings */
+.set-sec{margin-top:18px}
+.set-row{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 0;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.set-row:last-child{border:0}
+.set-row b{font-size:14.5px}
+.set-row small{display:block;color:var(--muted);font-size:12.5px}
+.swatches{display:flex;gap:8px;flex-wrap:wrap}
+.swatch{width:30px;height:30px;border-radius:50%;border:3px solid var(--surface);box-shadow:0 0 0 2px var(--line);transition:transform .15s}
+.swatch:hover{transform:scale(1.15)}
+.swatch[aria-pressed=true]{box-shadow:0 0 0 3px var(--ink)}
+.sw{position:relative;width:46px;height:26px;flex:none}
+.sw input{opacity:0;position:absolute;inset:0;width:100%;height:100%;margin:0;cursor:pointer;z-index:2}
+.sw span{position:absolute;inset:0;border-radius:99px;background:var(--line);transition:background .2s}
+.sw span::after{content:"";position:absolute;left:3px;top:3px;width:20px;height:20px;border-radius:50%;background:#fff;box-shadow:0 2px 6px rgba(0,0,0,.25);transition:transform .2s}
+.sw input:checked+span{background:var(--brand)}
+.sw input:checked+span::after{transform:translateX(20px)}
+.txt{border:1px solid var(--line);background:var(--surface-2);border-radius:12px;padding:9px 12px;outline:none;width:200px}
+.txt:focus{border-color:var(--brand);background:var(--surface)}
+
+/* player */
+.player{position:fixed;inset:0;z-index:200;display:none;padding:2.4vh 2vw;background:rgba(10,12,32,.55);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.player.open{display:flex;animation:fadeIn .25s ease both}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.pshell{flex:1;min-width:0;display:flex;background:var(--surface);border:1px solid var(--line);border-radius:24px;overflow:hidden;box-shadow:var(--sh-lg);animation:zoomIn .32s cubic-bezier(.2,.8,.2,1) both}
+@keyframes zoomIn{from{transform:scale(.94) translateY(14px);opacity:0}to{transform:none;opacity:1}}
+.pside{width:300px;flex:none;display:flex;flex-direction:column;background:var(--surface-2);border-right:1px solid var(--line);transition:margin .25s,opacity .25s}
+.player.noside .pside{margin-left:-300px;opacity:0;pointer-events:none}
+.ps-head{padding:14px 14px 8px}
+.ps-brand{display:flex;align-items:center;gap:9px;font-weight:850;letter-spacing:-.03em;margin-bottom:12px}
+.ps-brand .logo-mark{width:30px;height:30px;border-radius:10px}
+.ps-brand .logo-mark svg{width:14px;height:14px}
+.ps-search{position:relative}
+.ps-search .ic{position:absolute;left:12px;top:50%;transform:translateY(-50%);width:17px;height:17px;color:var(--muted)}
+.ps-search input{width:100%;height:40px;border:1px solid var(--line);background:var(--surface);border-radius:12px;padding:0 12px 0 36px;outline:none;font-size:14px}
+.ps-search input:focus{border-color:var(--brand);box-shadow:0 0 0 4px color-mix(in srgb,var(--brand) 15%,transparent)}
+.ps-tabs{display:flex;gap:4px;padding:6px 14px 10px}
+.ps-tabs button{flex:1;border:0;background:none;border-radius:10px;padding:7px 4px;font-weight:700;font-size:12.5px;color:var(--muted)}
+.ps-tabs button[aria-pressed=true]{background:var(--surface);color:var(--brand);box-shadow:var(--sh-sm)}
+.ps-list{flex:1;overflow:auto;padding:0 10px 10px;display:grid;align-content:start;gap:4px}
+.ps-item{display:flex;align-items:center;gap:10px;padding:7px 8px;border-radius:12px;cursor:pointer;transition:background .15s}
+.ps-item:hover{background:var(--surface)}
+.ps-item.on{background:var(--brand-soft)}
+.ps-item .tile{width:36px;height:36px;border-radius:10px;font-size:13px}
+.ps-item .t{flex:1;min-width:0}
+.ps-item .t b{display:block;font-size:13.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ps-item .t small{color:var(--muted);font-size:11.5px}
+.ps-item .fv{border:0;background:none;color:var(--muted);font-size:17px;line-height:1;padding:4px;transition:transform .15s,color .15s}
+.ps-item .fv:hover{transform:scale(1.2)}
+.ps-item .fv[aria-pressed=true]{color:var(--danger)}
+.ps-empty{padding:26px 14px;text-align:center;color:var(--muted);font-size:13px}
+.ps-foot{padding:10px 14px;font-size:11.5px;color:var(--muted);border-top:1px solid var(--line)}
+.pmain{flex:1;min-width:0;display:flex;flex-direction:column}
+.ptop{display:flex;align-items:center;gap:8px;min-height:60px;padding:8px 14px;border-bottom:1px solid var(--line);flex:none;flex-wrap:nowrap;overflow:hidden}
+.ptop>*{flex-shrink:0}.ptop .ptitle{flex-shrink:1;min-width:60px}
+.ptop .spacer{flex:1 1 0;min-width:0}
+@media (max-width:1700px){.pbtn.sec span{display:none}}
+@media (max-width:1250px){.stars-in,.timer{display:none}}
+.ptitle{min-width:0;margin:0 6px 0 2px}
+.ptitle b{display:block;font-size:16px;letter-spacing:-.02em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:22vw}
+.ptitle small{color:var(--muted);font-size:12px}
+.pbtn{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line);background:var(--surface);border-radius:11px;padding:8px 11px;font-weight:700;font-size:13px;transition:background .15s,transform .15s}
+.pbtn:hover{background:var(--surface-2);transform:translateY(-1px)}
+.pbtn[aria-pressed=true]{background:var(--brand-soft);color:var(--brand);border-color:color-mix(in srgb,var(--brand) 30%,var(--line))}
+.pbtn.x{background:var(--ink);color:var(--surface);border-color:var(--ink)}
+.pbtn.favb[aria-pressed=true]{color:var(--danger)}
+.pbtn.favb svg{width:16px;height:16px;fill:currentColor}
+.stars-in{display:inline-flex;gap:1px}
+.stars-in button{border:0;background:none;font-size:18px;color:var(--line);padding:0 1px;line-height:1;transition:transform .12s,color .12s}
+.stars-in button.on{color:#f59e0b}
+.stars-in button:hover{transform:scale(1.25)}
+.timer{font-variant-numeric:tabular-nums;font-size:12.5px;font-weight:750;color:var(--muted);background:var(--surface-2);border-radius:99px;padding:4px 10px}
+.pstage{position:relative;flex:1;background:#0b0d1f;min-height:0}
+.pstage iframe{position:absolute;inset:0;width:100%;height:100%;border:0;background:#fff}
+.pstage:fullscreen{background:#000}
+.ploading{position:absolute;inset:0;display:grid;place-items:center;align-content:center;gap:14px;color:#c9cdf0;font-weight:650;background:radial-gradient(circle at 50% 30%,#1c2150,#0b0d1f);text-align:center;padding:20px}
+.spin{width:42px;height:42px;border-radius:50%;border:4px solid rgba(255,255,255,.15);border-top-color:#fff;animation:rot .8s linear infinite}
+@keyframes rot{to{transform:rotate(360deg)}}
+.ploading p{margin:0;max-width:420px;color:#9aa0cf;font-size:13.5px;font-weight:500}
+.player.theater{padding:0}
+.player.theater .pshell{border-radius:0;border:0}
+.player.theater .pside{display:none}
+.player.theater .ptop{min-height:46px;padding:5px 10px}
+.player.theater .ptitle small{display:none}
+
+/* modals */
+.modal{position:fixed;inset:0;z-index:300;display:none;place-items:center;padding:20px;background:rgba(10,12,32,.55);backdrop-filter:blur(8px)}
+.modal.open{display:grid;animation:fadeIn .2s both}
+.mbox{position:relative;width:min(440px,100%);background:var(--surface);border:1px solid var(--line);border-radius:26px;padding:28px;box-shadow:var(--sh-lg);text-align:center;animation:zoomIn .3s cubic-bezier(.2,.8,.2,1) both;max-height:92vh;overflow:auto}
+.mbox h2{margin:0 0 6px;font-size:22px;letter-spacing:-.03em}
+.mbox p{margin:0 0 18px;color:var(--muted)}
+.mclose{position:absolute;right:14px;top:14px;width:34px;height:34px;border:0;border-radius:50%;background:var(--surface-2);color:var(--ink-2);display:grid;place-items:center}
+.mclose .ic{width:16px;height:16px}
+.pin{display:flex;gap:10px;justify-content:center;margin:6px 0 14px}
+.pin input{width:58px;height:68px;border-radius:16px;border:2px solid var(--line);background:var(--surface-2);text-align:center;font-size:30px;font-weight:800;outline:none;transition:border-color .15s,box-shadow .15s,transform .15s}
+.pin input:focus{border-color:var(--brand);background:var(--surface);box-shadow:0 0 0 5px color-mix(in srgb,var(--brand) 16%,transparent);transform:translateY(-2px)}
+.pin.shake{animation:shake .45s}
+@keyframes shake{20%,60%{transform:translateX(-9px)}40%,80%{transform:translateX(9px)}}
+.pin-msg{min-height:22px;font-size:13.5px;font-weight:650;color:var(--danger)}
+.reveal .big{font-size:56px;font-weight:900;letter-spacing:-.05em;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;margin:10px 0}
+.reveal .big span{display:inline-block;opacity:0;transform:translateY(20px) scale(.6);animation:letterIn .5s cubic-bezier(.2,.9,.3,1.4) forwards}
+@keyframes letterIn{to{opacity:1;transform:none}}
+.roul-card{margin:10px auto 18px;width:210px}
+.roul-card .art{border-radius:20px;aspect-ratio:16/11}
+.roul-card h3{margin:12px 0 2px;font-size:19px;letter-spacing:-.02em;min-height:1.3em}
+.keys{display:grid;grid-template-columns:auto 1fr;gap:9px 16px;text-align:left;margin-top:8px}
+.keys kbd{font:inherit;font-size:12px;font-weight:800;background:var(--surface-2);border:1px solid var(--line);border-bottom-width:2px;border-radius:8px;padding:2px 9px;justify-self:start}
+
+/* toasts and fx */
+.toasts{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);z-index:500;display:grid;gap:8px;justify-items:center;pointer-events:none}
+.toast{display:flex;align-items:center;gap:12px;background:var(--ink);color:var(--surface);padding:11px 18px;border-radius:16px;font-weight:650;font-size:14px;box-shadow:var(--sh-lg);animation:toastIn .35s cubic-bezier(.2,.8,.2,1) both}
+.toast.out{animation:toastOut .3s ease both}
+.toast .e{font-size:22px}
+.toast small{display:block;opacity:.7;font-weight:500;font-size:12px}
+@keyframes toastIn{from{opacity:0;transform:translateY(16px) scale(.94)}to{opacity:1;transform:none}}
+@keyframes toastOut{to{opacity:0;transform:translateY(10px)}}
+#fx{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:600}
+body.rainbow .logo-mark,body.rainbow .hero,body.rainbow .btn{animation:hue 4s linear infinite}
+@keyframes hue{to{filter:hue-rotate(360deg)}}
+
+/* responsive */
+@media (max-width:1050px){.two{grid-template-columns:1fr}.rail{width:76px;padding:14px 8px}.rail .lbl,.rail .badge,.rail-foot,.brand span.nm{display:none}.rail-btn{justify-content:center;padding:12px}.brand{justify-content:center;padding:6px 0 14px}}
+@media (max-width:760px){
+  .app{flex-direction:column}
+  .rail{width:100%;height:auto;position:fixed;bottom:0;top:auto;left:0;right:0;flex-direction:row;justify-content:space-around;padding:6px;border-right:0;border-top:1px solid var(--line);overflow-x:auto}
+  .brand{display:none}.rail-btn{width:auto;flex:none;padding:10px 12px}
+  .top{padding:10px 14px;flex-wrap:wrap}.search{flex:1 1 100%;max-width:none;order:5}
+  .crushbtn .lbl2{display:none}.pages{padding:18px 14px 90px}
+  .gotd{grid-template-columns:1fr}.hero{padding:24px 20px}
+  :root{--cw:150px}
+  .orig-card{grid-template-columns:1fr}.orig-card .tile{width:100%}
+  .player{padding:0}.pshell{border-radius:0}.pside{position:absolute;z-index:5;height:100%;width:82%;max-width:320px}
+  .ptitle b{max-width:44vw}.pbtn span{display:none}.bars .b{grid-template-columns:90px 1fr 50px}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="bg" aria-hidden="true"><i></i><i></i><i></i></div>
+<div class="app">
+  <nav class="rail" aria-label="Main">
+    <button class="brand" id="brand" aria-label="Niamverse home"><span class="logo-mark"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span><span class="nm">Niamverse</span></button>
+    <button class="rail-btn" data-tab="home"><svg class="ic" viewBox="0 0 24 24"><path d="M3 11l9-8 9 8v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/></svg><span class="lbl">Home</span></button>
+    <button class="rail-btn" data-tab="library"><svg class="ic" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/></svg><span class="lbl">Library</span><span class="badge" id="bLib">0</span></button>
+    <button class="rail-btn" data-tab="favorites"><svg class="ic" viewBox="0 0 24 24"><path d="M12 21s-7-4.6-9.3-9.2C1.2 8.6 3.2 5 6.6 5c2 0 3.5 1.1 5.4 3 1.9-1.9 3.4-3 5.4-3 3.4 0 5.4 3.6 3.9 6.8C19 16.4 12 21 12 21z"/></svg><span class="lbl">Favorites</span><span class="badge" id="bFav">0</span></button>
+    <button class="rail-btn" data-tab="recent"><svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span class="lbl">Recent</span></button>
+    <button class="rail-btn" data-tab="originals"><svg class="ic" viewBox="0 0 24 24"><path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/></svg><span class="lbl">Originals</span></button>
+    <button class="rail-btn" data-tab="treasure"><svg class="ic" viewBox="0 0 24 24"><path d="M6 3h12l4 6-10 12L2 9z"/><path d="M2 9h20M9 3l3 6 3-6M12 21V9"/></svg><span class="lbl">Treasure</span><span class="badge" id="bGem">0/7</span></button>
+    <button class="rail-btn" data-tab="profile"><svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg><span class="lbl">Profile</span></button>
+    <button class="rail-btn" data-tab="settings"><svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg><span class="lbl">Settings</span></button>
+    <div class="rail-foot">Made by Niam<br>Thanks to Riha for the idea</div>
+  </nav>
+
+  <div class="content">
+    <header class="top">
+      <div class="search" role="search">
+        <svg class="ic" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+        <input id="gq" type="search" placeholder="Search games or categories" autocomplete="off" spellcheck="false" aria-label="Search games">
+        <span class="kbd" id="slash">/</span>
+        <button class="xbtn" id="gqClear" type="button" aria-label="Clear search" hidden><svg class="ic" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+      </div>
+      <span class="spacer"></span>
+      <button class="pillbtn" id="btnRoulette" type="button" title="Random game"><svg class="ic" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="8.5" cy="8.5" r="1" fill="currentColor"/><circle cx="15.5" cy="15.5" r="1" fill="currentColor"/><circle cx="12" cy="12" r="1" fill="currentColor"/></svg><span class="lbl2">Spin</span></button>
+      <button class="pillbtn" id="btnTheme" type="button" title="Switch theme" aria-label="Switch theme"><svg class="ic" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button>
+      <button class="pillbtn crushbtn" id="btnCrush" type="button"><svg class="ic" viewBox="0 0 24 24"><rect x="4" y="10" width="16" height="11" rx="3"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg><span class="lbl2">Reveal Niam's Crush</span></button>
+    </header>
+
+    <main class="pages" id="pages">
+      <section class="page" id="p-home" hidden></section>
+
+      <section class="page" id="p-library" hidden>
+        <div class="libhead">
+          <h1 class="pt">Library</h1>
+          <p class="psub">Every game in one tidy place. Search, filter, favorite, play.</p>
+          <button class="glitter" data-act="glitter" aria-label="Sparkle">&#10022;</button>
+        </div>
+        <div class="chips" id="chips" style="margin-top:18px"></div>
+        <div class="letters" id="letters"></div>
+        <div class="toolbar">
+          <h2><span id="listTitle">All games</span><span class="sub" id="listSub"></span></h2>
+          <div class="tools">
+            <div class="seg" id="viewSeg"><button data-set="view" data-v="grid" aria-pressed="true">Grid</button><button data-set="view" data-v="list" aria-pressed="false">List</button></div>
+            <select class="sel" id="sort" aria-label="Sort games"><option value="az">A to Z</option><option value="za">Z to A</option><option value="most">Most played</option><option value="rated">Top rated</option><option value="shuffle">Shuffled</option></select>
+          </div>
+        </div>
+        <div class="grid" id="grid"></div>
+        <div id="state"></div>
+        <div class="more"><button class="btn ghost" id="more" type="button" hidden>Show more games</button></div>
+        <div id="sentinel" style="height:1px"></div>
+      </section>
+
+      <section class="page" id="p-favorites" hidden></section>
+      <section class="page" id="p-recent" hidden></section>
+      <section class="page" id="p-originals" hidden></section>
+      <section class="page" id="p-treasure" hidden></section>
+      <section class="page" id="p-profile" hidden></section>
+      <section class="page" id="p-settings" hidden></section>
+    </main>
+
+    <footer class="foot">
+      <div>Made with <button id="footHeart" type="button" aria-label="Heart">&#9829;</button> by <b>Niam</b> &middot; <b>Niamverse</b></div>
+      <div class="row"><span class="pill">Made by Niam</span><span class="pill">Thanks to Riha for the idea</span><span class="pill">Press ? for shortcuts</span></div>
+    </footer>
+  </div>
+</div>
+
+<!-- PLAYER -->
+<div class="player" id="player" role="dialog" aria-modal="true" aria-label="Game player">
+  <div class="pshell" id="pshell">
+    <aside class="pside" id="pside">
+      <div class="ps-head">
+        <div class="ps-brand"><span class="logo-mark"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>Niamverse</div>
+        <div class="ps-search"><svg class="ic" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg><input id="psq" type="search" placeholder="Search games" autocomplete="off" spellcheck="false" aria-label="Search games"></div>
+      </div>
+      <div class="ps-tabs" id="psTabs"><button data-pt="fav" aria-pressed="true">Favorites</button><button data-pt="recent" aria-pressed="false">Recent</button><button data-pt="all" aria-pressed="false">Search</button></div>
+      <div class="ps-list" id="psList"></div>
+      <div class="ps-foot">Made by Niam</div>
+    </aside>
+    <section class="pmain">
+      <div class="ptop">
+        <button class="pbtn sec" id="pSide" type="button" aria-pressed="true" title="Toggle sidebar (S)"><svg class="ic" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="M9 4v16"/></svg><span>Sidebar</span></button>
+        <div class="ptitle"><b id="pTitle">Game</b><small id="pSub">Niamverse</small></div>
+        <div class="stars-in" id="pStars" aria-label="Rate this game"></div>
+        <button class="pbtn favb" id="pFav" type="button" aria-pressed="false" title="Favorite"><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg><span>Favorite</span></button>
+        <span class="timer" id="pTimer" title="Time this session">0:00</span>
+        <span class="spacer"></span>
+        <button class="pbtn sec" id="pReload" type="button" title="Reload game"><svg class="ic" viewBox="0 0 24 24"><path d="M20 11a8 8 0 1 0-2.3 5.7M20 4v7h-7"/></svg><span>Reload</span></button>
+        <button class="pbtn sec" id="pTab" type="button" title="Open in new tab"><svg class="ic" viewBox="0 0 24 24"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg><span>New tab</span></button>
+        <button class="pbtn" id="pTheater" type="button" aria-pressed="false" title="Large player (T)"><svg class="ic" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M6 9h4M6 9v4M18 15h-4M18 15v-4"/></svg><span>Large player</span></button>
+        <button class="pbtn" id="pFull" type="button" title="Fullscreen (F)"><svg class="ic" viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg><span>Fullscreen</span></button>
+        <button class="pbtn x" id="pClose" type="button" title="Close (Esc)"><svg class="ic" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg><span>Close</span></button>
+      </div>
+      <div class="pstage" id="pstage">
+        <iframe id="frame" title="Game" allow="fullscreen; autoplay; gamepad; clipboard-write; microphone; camera"></iframe>
+        <div class="ploading" id="ploading"><div class="spin"></div><div>Loading your game</div></div>
+      </div>
+    </section>
+  </div>
+</div>
+
+<!-- ROULETTE -->
+<div class="modal" id="mRoulette"><div class="mbox">
+  <button class="mclose" data-close aria-label="Close"><svg class="ic" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+  <h2>Game roulette</h2><p>Let fate pick your next game.</p>
+  <div class="roul-card"><div class="art" id="rArt"><span class="mono" id="rMono">?</span></div><h3 id="rTitle">Spinning</h3><small id="rCat" style="color:var(--muted)"></small></div>
+  <div style="display:flex;gap:10px;justify-content:center"><button class="btn ghost" id="rAgain" type="button">Spin again</button><button class="btn" id="rPlay" type="button">Play it</button></div>
+</div></div>
+
+<!-- CRUSH -->
+<div class="modal" id="mCrush"><div class="mbox" id="crushBox">
+  <button class="mclose" data-close aria-label="Close"><svg class="ic" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+  <div id="crushLock">
+    <div style="font-size:42px">&#128274;</div>
+    <h2>Reveal Niam's Crush</h2><p>Enter the 4 digit password.</p>
+    <div class="pin" id="pin"><input inputmode="numeric" maxlength="1" aria-label="Digit 1"><input inputmode="numeric" maxlength="1" aria-label="Digit 2"><input inputmode="numeric" maxlength="1" aria-label="Digit 3"><input inputmode="numeric" maxlength="1" aria-label="Digit 4"></div>
+    <div class="pin-msg" id="pinMsg"></div>
+  </div>
+  <div id="crushOpen" class="reveal" hidden>
+    <div style="font-size:42px">&#128150;</div>
+    <h2>Niam's crush is</h2>
+    <div class="big" id="crushName"></div>
+    <p>Shh. Keep it between us.</p>
+    <button class="btn" data-close type="button">Got it</button>
+  </div>
+</div></div>
+
+<!-- SHORTCUTS -->
+<div class="modal" id="mKeys"><div class="mbox">
+  <button class="mclose" data-close aria-label="Close"><svg class="ic" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+  <h2>Keyboard shortcuts</h2><p>Work whenever you are not typing.</p>
+  <div class="keys">
+    <kbd>/</kbd><span>Focus search</span><kbd>?</kbd><span>Show this list</span>
+    <kbd>R</kbd><span>Random game roulette</span><kbd>F</kbd><span>Fullscreen the game</span>
+    <kbd>T</kbd><span>Large player on or off</span><kbd>S</kbd><span>Toggle player sidebar</span>
+    <kbd>Esc</kbd><span>Exit large player, then close</span><kbd>1 to 8</kbd><span>Jump between tabs</span>
+  </div>
+</div></div>
+
+<div class="toasts" id="toasts" aria-live="polite"></div>
+<canvas id="fx"></canvas>
+<script>
+/* Niamverse. Made by Niam. */
+'use strict';
+
+/* ---------------------------------------------------------------
+   CONFIG: where the game library lives. Plain and editable.
+---------------------------------------------------------------- */
+const CONFIG = {
+  mirrors: ['https://cdn.jsdelivr.net', 'https://fastly.jsdelivr.net', 'https://testingcf.jsdelivr.net'],
+  listPath: '/gh/bubbls/ugs-singlefile@main/games.js',
+  filePath: '/gh/bubbls/ugs-singlefile/UGS-Files/'
+};
+
+/* ---------------------------------------------------------------
+   ORIGINALS: your own games live here. Add an object per game.
+   Use  html: '<full html page>'  or  url: 'path/to/game.html'.
+   The Originals tab and the whole site pick them up automatically.
+---------------------------------------------------------------- */
+const ORIGINALS = [
+  {
+    id: 'snake', title: 'Neon Snake', icon: '🐍', desc: 'A tiny sample original. Eat, grow, do not hit yourself.',
+    html: `<!doctype html><html><head><meta charset="utf-8"><style>html,body{margin:0;height:100%;background:#0f1226;color:#fff;font-family:system-ui,sans-serif;display:flex;align-items:center;justify-content:center;flex-direction:column}canvas{background:#161a33;border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,.4);max-width:92vmin;max-height:78vmin}#s{margin:12px;font-weight:700;letter-spacing:.04em}small{opacity:.6;margin-top:10px}</style></head><body><div id="s">Score 0</div><canvas id="c" width="400" height="400"></canvas><small>Arrow keys or WASD. Space restarts.</small><script>
+const c=document.getElementById('c'),x=c.getContext('2d'),N=20,S=20;let sn,d,nd,f,sc,dead;
+function reset(){sn=[{x:10,y:10},{x:9,y:10},{x:8,y:10}];d={x:1,y:0};nd={x:1,y:0};sc=0;dead=false;place();}
+function place(){do{f={x:Math.floor(Math.random()*N),y:Math.floor(Math.random()*N)}}while(sn.some(p=>p.x==f.x&&p.y==f.y))}
+function step(){if(dead)return;d=nd;const h={x:sn[0].x+d.x,y:sn[0].y+d.y};if(h.x<0||h.y<0||h.x>=N||h.y>=N||sn.some(p=>p.x==h.x&&p.y==h.y)){dead=true;draw();return}sn.unshift(h);if(h.x==f.x&&h.y==f.y){sc++;place()}else sn.pop();draw()}
+function draw(){x.fillStyle='#161a33';x.fillRect(0,0,400,400);x.fillStyle='#ff5d8f';x.beginPath();x.arc(f.x*S+10,f.y*S+10,7,0,7);x.fill();sn.forEach((p,i)=>{x.fillStyle=i?'#7c83ff':'#c4c7ff';x.fillRect(p.x*S+1,p.y*S+1,S-2,S-2)});document.getElementById('s').textContent=dead?'Game over. Score '+sc+'. Press Space':'Score '+sc}
+addEventListener('keydown',e=>{const k=e.key.toLowerCase();const m={arrowup:[0,-1],w:[0,-1],arrowdown:[0,1],s:[0,1],arrowleft:[-1,0],a:[-1,0],arrowright:[1,0],d:[1,0]}[k];if(m){e.preventDefault();if(m[0]!=-d.x||m[1]!=-d.y)nd={x:m[0],y:m[1]}}if(k==' '){e.preventDefault();reset();draw()}});
+reset();draw();setInterval(step,110);
+<\/script></body></html>`
+  }
+];
+
+/* Password lock for the crush reveal. Stored as a hash plus a masked name,
+   so the plain text is not sitting in the page. Just for fun. */
+const LOCK = { hash: 2541488356, salt: 'niamverse|', masked: 'clFWSl1QUg==' };
+// <logic>
+/* ============== pure logic: names, categories, search ============== */
+const WORD_LIST = ("able about above action adventure after age air alien all alone alpha amazing and angry animal another ant apple arcade arch archery arena army art ascent attack awesome axe baby back backyard bad ball balls band bank banana barn base baseball basket basketball bat battle bay beach bean bear beat bee big bike bird bit black blast blaster block blocks blood bloody blue boat body bomb bone bones bonus boom boss bottle bounce bouncy bow bowl bowling box boxing boy brain brawl bread break breakout brick bricks bridge bro bros brother brothers bubble bug build bullet bunny burger bus bush butter button cake call camp candy cannon captain car card cards carnival cart castle cat cats cave chaos chase cheese chess chicken chip circle city clash class classic clear cliff climb clock clone cloud club coal code coffee coin cold color colors combat command cookie cool core cover crash crazy cream creep crime cross crush crystal cube cup curse cut cute dad dark dash date day dead death deck decision deep defend defense demon derby desert devil dice dig dino dinosaur dirt disco dive doctor dodge dog dolphin domino door doodle double down dragon draw dream drift drive driver drop drum duck dude duel dungeon dunk dust eagle earth easy eat egg elastic electric elevator empire end endless enemy escape evil evolution exit extreme eye face factory fall family fancy fantasy farm fast fat fear feed fight fighter final find fire fish flappy flash flip flood flower fly flying food foot football forest fort fortress fox frog from fruit funky funny fury future galaxy game gang gangster garden gas gate gem ghost giant girl glory goal gold golden golf good goof grand granny grass gravity green grind ground grow gun guy hacker half hammer hand hands happy hard harvest haunted head heart heat heavy helix hell hero high hill hit hobo hole home hook hop horror hot house hungry hunt hunter ice idle impossible incredible infinite ink insane iron island jack jam jelly jet joy jump jungle just keen kick kid king kitten knight knock land laser last launch leaf learn legend legends level life light line little live lock lone long lord lost love luck lucky mad madness magic man mario master match max maze mega merge metal mini miner mine mission monkey monster moon moto motor mountain mouse multi ninja night nightmare noob nut ocean office old one online only orange orb outlaw over pac paint panda paper papa park parking party penguin people perfect pet piano pig pinball pirate pixel pizza plane planet plant play player pocket point pool pop port portal power prince princess prison pro puzzle quest quiz race racer racing rage rail rain rainbow ramp rampage random red retro return revenge rhythm ride rider ring road robot rock rocket roll room rope round royal run runner rush sand santa save scary school score sea secret shadow shark sheep shift ship shoot shooter shot show side silent sim simulator skate sky slam slash slice slide slime slope smash snail snake sniper snow soccer soldier solitaire sonic soul space speed spider spin spirit splash sport sports squad stack star stealth steel stick stickman stone storm story street strike stunt super surf survival survivor sushi swing sword table tank tap tax taxi team tennis territory tetris the thief this tiny toast tomb tower toy track traffic train trap treasure tree trick trouble truck turbo turtle twin ultimate under unfair upgrade van vex video village virus war warrior water wave way wheel when where whack white wild win wing winter witch wolf wonder wood word work world worm yard yellow you zero zombie zone " +
+  "clicker tycoon bloons fireboy watergirl achievement unlocked minecraft craft eaglercraft cuphead among geometry subway surfers temple megaman kirby zelda link ocarina time awakening past metroid fusion castlevania fantasy kingdom hearts undertale deltarune pokemon emerald ruby sapphire firered leafgreen crystal diamond pearl platinum heartgold soulsilver silver gold unbound radical rogue kaizo mania advance colors sunshine galaxy kart party paper sports heads pacman galaga frogger joust tempest spelunky celeste hollow knight terraria roblox obby papa louie pizzeria burgeria freezeria wingeria sundae cupcakeria pancakeria pastaria cheeseria bakeria donut scooperia taco mia sushiria hotdoggeria cookie idle miner dogeminer growagarden snailbob stickminbreakingbank motox moto x3m madalin stunt cars slither agar paperio hole io krunker shell shockers smash karts cut the rope bad ice cream papa's pou flappy bird doodle jump learn fly basket random soccer football legends retro bowl madden nba hangtime jam live nhl fifa street fighter mortal kombat tekken killer instinct dragon ball legacy goku bleach naruto one piece pirate kings brawl stars tower defense bloons td td5 btd ninja kiwi fnf friday funkin fnaf freddy fazbear baldi basics granny slendrina slender backrooms liminal escape road car crash simulator truck driver parking fury drift hunters boss racing nitro ctgp mario64 mario world land bros brothers super pixel gun zombie waves strike force heroes madness combat project nexus accelerant hydraulic stick war fighter archer duel defenders ragdoll hit archers achievement unlocked").split(/\s+/).filter(Boolean);
+const WORDS = new Set(WORD_LIST.concat("miami crossy wordle polytrack poly motox monaco havana london paris berlin houston zurich beijing iceland orleans francisco barcelona petersburg mexico buenos aires tokyo scratch baldi amongus among".split(" ")));
+for (const w of Array.from(WORDS)) if (w.length >= 3) WORDS.add(w + 's');
+['papas', 'baldis', 'bros', 'brothers'].forEach(w => { if (w === 'papas' || w === 'baldis') WORDS.delete(w); });
+
+const ACRONYMS = new Set(['fnf','fnaf','fnac','fnaw','gba','nes','snes','gta','pvz','nba','nfl','nhl','fifa','td','ds','ps1','psx','n64','dbz','cod','cs','io','ai','tmnt','wwf','ctgp','smb','sm64','sm63','ssf2','mmbn','dx','hd','sfk','tv','ufo','bfdi','rpg','fps','btd','ovo','mk','kh','ff','ii','iii','iv','vi','vii','ix']);
+const SMALL = new Set(['vs','of','the','and','in','to','a','an','on','at']);
+
+function segment(s) {
+  const n = s.length;
+  if (n < 4) return [s];
+  const best = new Array(n + 1).fill(Infinity), prev = new Array(n + 1).fill(null);
+  best[0] = 0;
+  for (let i = 0; i < n; i++) {
+    if (best[i] === Infinity) continue;
+    const c = best[i] + 4;
+    if (c < best[i + 1]) { best[i + 1] = c; prev[i + 1] = [i, 0]; }
+    for (let L = 2; L <= Math.min(14, n - i); L++) {
+      const w = s.substr(i, L);
+      if (WORDS.has(w)) {
+        const cost = best[i] + (L === 2 ? 9 : L === 3 ? 3 : 2);
+        if (cost < best[i + L]) { best[i + L] = cost; prev[i + L] = [i, 1]; }
+      }
+    }
+  }
+  const parts = [];
+  let j = n;
+  while (j > 0) { const [i, k] = prev[j]; parts.push({ t: s.slice(i, j), k }); j = i; }
+  parts.reverse();
+  const merged = [];
+  for (const p of parts) {
+    const last = merged[merged.length - 1];
+    if (!p.k && last && !last.k) last.t += p.t; else merged.push({ t: p.t, k: p.k });
+  }
+  return merged.map(m => m.t);
+}
+
+function prettify(raw) {
+  let s = raw.replace(/^cl/i, '');
+  s = s.replace(/\s*\(\d+\)\s*/g, ' ').replace(/(\d)\.(?=\d)/g, '$1~').replace(/[._\-]+/g, ' ');
+  s = s.replace(/([a-z])([A-Z])/g, '$1 $2').replace(/([A-Za-z])(\d)/g, '$1 $2').replace(/(\d)([A-Za-z])/g, '$1 $2');
+  s = s.replace(/[^A-Za-z0-9~ ]+/g, ' ').trim();
+  const out = [];
+  for (const tok of s.split(/\s+/).filter(Boolean)) {
+    if (/^[0-9~]+$/.test(tok)) { out.push(tok.replace(/~/g, '.')); continue; }
+    const upper = tok.length >= 2 && tok === tok.toUpperCase();
+    if (upper) { out.push(tok); continue; }
+    for (const p of segment(tok.toLowerCase())) out.push(p);
+  }
+  let title = out.map((w, i) => {
+    if (ACRONYMS.has(w)) return w.toUpperCase();
+    if (i > 0 && SMALL.has(w)) return w;
+    return w.charAt(0).toUpperCase() + w.slice(1);
+  }).join(' ');
+  title = title.replace(/\b(\d) D\b/g, '$1D').replace(/\b(\d) M\b/g, '$1M').replace(/\b(\d) V (\d)\b/g, '$1v$2')
+    .replace(/([A-Za-z]{2,}) S\b/g, "$1's").replace(/\s+/g, ' ').trim();
+  return title || raw;
+}
+
+const CATS = [
+  { id: 'rhythm',    label: 'Rhythm',          icon: '🎵', re: /^fnf|funkin|fridaynight|famidash|dubstep|rhythm|taiko|tiles|piano|bollybeat|mixtape/ },
+  { id: 'horror',    label: 'Horror',          icon: '👻', re: /fnaf|fnac|fnaw|fivenights|granny|backrooms|slender|horror|scary|creepy|haunted|skinwalker|nightmare|deadseat|momimsleeping|baldi|phasma|dread|spooky|ghost|residentevil|bioevil|silenthill|wherewehide|theclassroom/ },
+  { id: 'pokemon',   label: 'Pokémon',         icon: '⚡', re: /^poke|pokemon|pokmon/ },
+  { id: 'mario',     label: 'Mario',           icon: '🍄', re: /mario|mari0|nsmb|luigi|wario|yoshi|^smb|^sm6[34]|kaizo/ },
+  { id: 'sonic',     label: 'Sonic',           icon: '💨', re: /sonic|^ffsonic|knuckles|^tails/ },
+  { id: 'idle',      label: 'Idle & Clickers', icon: '🖱️', re: /clicker|idle|tycoon|incremental|prestige|singularity|antimatter|growagarden|growmi|growden|monkeymart|dogeminer|evolution|bitburner/ },
+  { id: 'fighting',  label: 'Fighting',        icon: '🥊', re: /mortalkombat|^mk|streetfighter|tekken|killerinstinct|smash(?!kart|hit)|bleachvs|^dbz|dragonball|marvelvs|xmen|puzzlefighter|fighter|boxing|wrestl|^wwf|ssf2|brawl|punchout|stickfight|hajime|karate|handsofwar|duel|ragdoll/ },
+  { id: 'racing',    label: 'Racing',          icon: '🏎️', re: /rac(e|ing|er)|drift|moto|kart|^nfs|truck|rally|carking|carcrash|careatscar|carramp|carstunt|carmods|supercar|crazycar|taxi|^cars?$|driv|parking|wheel|turismo|fzero|excitebike|wipeout|polytrack|hillclimb|derby|ctgp|burnout|highway|bike|bmx|jetski|snowrider|rider|^ride|stunt|escaperoad|roadfighter|roadrash|roadoffury|slowroads/ },
+  { id: 'sports',    label: 'Sports',          icon: '🏀', re: /fifa|madden|^nba|nfl|^nhl|basket|soccer|football|baseball|golf|tennis|volley|hockey|bowl|olympic|pingpong|tabletennis|cricket|penalty|dunk|sportshead|backyard|worldcup|8ball|billiard|skate|snowboard|surf(?!ers)|swim|kengriffey|hoops|kickball|tripleplay|pool(?!party|io)/ },
+  { id: 'shooters',  label: 'Shooters',        icon: '🎯', re: /gun|shoot|sniper|^cod(?!e)|^cs(16|6|go|ds)|doom|quake|wolfenstein|halo|counter|bullet|zombie|dukenukem|perfectdark|goldeneye|rainbowsix|halflife|^hl2|ultrakill|krunker|1v1lol|medalofhonor|recoil|rocketjump|sentryfortress|warfare|pixelcombat|^sfk|madness|deadzed|deadestate|deadfrontier|laststand|blockpost|smashkart|archery|strikeforce|assassin|duckhunt|metalslug|contra|maxpayne|spyhunter|bazooka|tank/ },
+  { id: 'rpg',       label: 'RPG & Adventure', icon: '🗡️', re: /finalfantasy|^ff\d|zelda|^loz|dragonquest|dragonwarrior|persona|goldensun|chronotrigger|earthbound|secretofmana|kingdomhearts|fireemblem|undertale|deltarune|rpg|ocarina|majora|linksawakening|linktothepast|minishcap|phantasystar|harvestmoon|animalcrossing|tomodachi|legendof|adventure|quest|dungeon|castaway|journey|diablo|daggerfall|lonewolf|medievil|battlechip|mmbn|mmsf|professorlayton|phoenix|pheonix|aceattorney/ },
+  { id: 'sandbox',   label: 'Sandbox',         icon: '⛏️', re: /minecraft|eaglercraft|craft|sandbox|terraria|melon|minecaves|roblox|doblox|bitlife|petworld|nintendogs|luckyblock|grindcraft|helios|nebula|minceraft|mrmine|noobminer|^mine(?!sweeper)/ },
+  { id: 'strategy',  label: 'Strategy & TD',   icon: '🏰', re: /bloons|btd|towerdefen|defen[cd]|^td|td\d|empire|conquer|ageof|advancewars|endlesswar|raftwars|stickwar|castlewar|territ|rebuild|^wars?|command|polytopia|kingdom|tiberian|redalert|steelsurge|mindwave|battlezone|battlesim|siege|clash/ },
+  { id: 'puzzle',    label: 'Puzzle & Board',  icon: '🧩', re: /2048|tetris|puzzle|block|match|bubble|solitaire|chess|checkers|bejeweled|sudoku|wordle|zenword|crossword|riddle|quiz|maze|minesweeper|sandtris|sort|suika|plinko|^uno$|blackjack|roulette|peggle|chuzzle|hextris|bloxorz|fluidism|drawtheline|lockthedoor|escape|fireboy|cuttherope|littlealchemy|connect|mahjong|sliceit|zuma|qbert|lemmings|helix|stack|knifehit|ohflip|trivia|impossible|trollface|thisistheonlylevel/ },
+  { id: 'runners',   label: 'Runners',         icon: '🏃', re: /subwaysurf|templerun|^run\d?$|slope|jetpack|geometry|^dash|dashmetry|tunnelrush|rooftoprun|dinorun|crossyroad|flappy|doodlejump|learntofly|clusterrush|runningfred|santarun|burgerrun|runmo|obby|parkour|climb|jump|fall(?!out)|rollingsky|sprint|waverun|wavedash|vibribbon/ },
+  { id: 'platformers', label: 'Platformers',   icon: '🕹️', re: /megaman|kirby|castlevania|celeste|donkeykong|^dk|crash|rayman|metroid|ducktales|alexkidd|banjo|meatboy|vvvvvv|^vex|fancypants|happywheels|bubsy|jazzjackrabbit|spelunky|cavestory|hollowknight|lowknight|silk|brotato|gettingoverit|babychicco|chibiknight|wonderboy|bonanza|rocketknight|hobo|toejam|conker|earthworm|ecco|shinobi|goldenaxe|streetofrage|snowbros|bomberman|gyromite|pitfall|pepsiman|plat/ },
+  { id: 'arcade',    label: 'Arcade & More',   icon: '🎮', re: /(?:)/ }
+];
+const CAT_BY_ID = Object.fromEntries(CATS.map(c => [c.id, c]));
+
+function categorize(key) {
+  for (const c of CATS) if (c.re.test(key)) return c;
+  return CATS[CATS.length - 1];
+}
+
+const BLOCK = /epstein|doki|postal|kanye|crackhouse|douchebag|iraq|kimjong|trump|drump|femboy|hinohomo|mutilate|gorescript|bloodmoney|bloodtournament|gunblood|sayori|nomoregame|icantbelieve|thanksforreminding|ormmima|drool|girlfriend|^sex|nude|raldis/;
+
+function hash(str) { let h = 2166136261; for (let i = 0; i < str.length; i++) { h ^= str.charCodeAt(i); h = Math.imul(h, 16777619); } return h >>> 0; }
+
+function buildGames(list) {
+  const byKey = new Map();
+  for (const raw of list) {
+    if (typeof raw !== 'string' || !raw.startsWith('cl')) continue;
+    if (raw.length > 34 || /[^A-Za-z0-9 _.\-()!&+']/.test(raw)) continue;
+    const key = raw.toLowerCase().replace(/^cl/, '').replace(/\(\d+\)/g, '').replace(/[^a-z0-9]/g, '');
+    if (key.length < 2 || BLOCK.test(key)) continue;
+    const prev = byKey.get(key);
+    if (!prev || (prev.file.includes('(') && !raw.includes('('))) byKey.set(key, { file: raw, key });
+  }
+  const games = [];
+  for (const g of byKey.values()) {
+    const title = prettify(g.file);
+    const cat = categorize(g.key);
+    const h = hash(g.key) % 360;
+    const words = title.split(' ').filter(w => /[A-Za-z0-9]/.test(w));
+    const mono = (words.length > 1 ? words[0][0] + words[1][0] : (words[0] || '?').slice(0, 2)).toUpperCase();
+    games.push({
+      file: g.file, key: g.key, title, norm: title.toLowerCase(), cat, mono,
+      c1: `hsl(${h} 78% 58%)`, c2: `hsl(${(h + 48) % 360} 82% 52%)`
+    });
+  }
+  games.sort((a, b) => a.title.localeCompare(b.title, undefined, { numeric: true }));
+  games.forEach((g, i) => { g.id = i; });
+  return games;
+}
+
+function subseq(needle, hay) { let i = 0; for (const ch of hay) { if (ch === needle[i]) i++; if (i === needle.length) return true; } return false; }
+
+function scoreGame(g, q, tokens) {
+  if (g.norm === q) return 1000;
+  let s = 0;
+  for (const tok of tokens) {
+    let m;
+    if (g.norm.startsWith(tok)) m = 100;
+    else if ((' ' + g.norm).includes(' ' + tok)) m = 80;
+    else if (g.key.includes(tok)) m = 60;
+    else if (g.cat.label.toLowerCase().includes(tok)) m = 30;
+    else if (tok.length >= 3 && subseq(tok, g.key)) m = 10;
+    else return 0;
+    s += m;
+  }
+  return s - g.norm.length * 0.1;
+}
+// </logic>
+
+/* ======================= core: helpers, state ======================= */
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const todayStr = () => { const d = new Date(); return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); };
+const fmtTime = s => { s = Math.floor(s); const h = Math.floor(s / 3600), m = Math.floor(s % 3600 / 60); return h ? h + 'h ' + m + 'm' : m ? m + 'm' : s + 's'; };
+const clock = s => Math.floor(s / 60) + ':' + String(Math.floor(s % 60)).padStart(2, '0');
+function ago(t) { const s = (Date.now() - t) / 1000; if (s < 60) return 'just now'; if (s < 3600) return Math.floor(s / 60) + 'm ago'; if (s < 86400) return Math.floor(s / 3600) + 'h ago'; return Math.floor(s / 86400) + 'd ago'; }
+const isTyping = t => t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.tagName === 'SELECT' || t.isContentEditable);
+
+const KEY = 'niamverse.v1';
+const DEF = () => ({
+  favs: [], recent: [], plays: {}, time: {}, rating: {}, ach: {}, gems: [],
+  streak: { last: '', count: 0, best: 0 }, counters: { searches: 0, roulette: 0 }, flags: {}, tab: 'home',
+  settings: { name: 'Player', theme: 'light', accent: 'indigo', density: 'cozy', view: 'grid', tags: true, motion: true, confetti: true, sidebar: true, startLarge: false, remember: true, sort: 'az' }
+});
+function loadState() {
+  const d = DEF();
+  try {
+    const raw = JSON.parse(localStorage.getItem(KEY) || 'null');
+    if (raw && typeof raw === 'object') mergeState(d, raw);
+  } catch (e) {}
+  return d;
+}
+function mergeState(d, raw) {
+  for (const k in d) {
+    if (raw[k] === undefined) continue;
+    if (Array.isArray(d[k])) { if (Array.isArray(raw[k])) d[k] = raw[k]; }
+    else if (d[k] && typeof d[k] === 'object') { if (raw[k] && typeof raw[k] === 'object') Object.assign(d[k], raw[k]); }
+    else d[k] = raw[k];
+  }
+}
+let S = loadState();
+let saveT;
+function save(now) {
+  clearTimeout(saveT);
+  const f = () => { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} };
+  if (now) f(); else saveT = setTimeout(f, 250);
+}
+
+/* ---------------- settings, themes ---------------- */
+const ACCENTS = { indigo: ['#5b5ef4', '#8b5cf6'], violet: ['#7c3aed', '#d946ef'], pink: ['#ec4899', '#f97316'], rose: ['#e11d48', '#fb7185'], orange: ['#f97316', '#f59e0b'], emerald: ['#10b981', '#06b6d4'], cyan: ['#0891b2', '#6366f1'], gold: ['#c98f00', '#f59e0b'] };
+const THEMES = [['light', 'Light'], ['dark', 'Dark'], ['midnight', 'Midnight'], ['sunset', 'Sunset'], ['gold', 'Gold (secret)']];
+const DENS = { compact: '150px', cozy: '188px', large: '240px' };
+function applySettings() {
+  const s = S.settings;
+  if (s.theme === 'gold' && !S.flags.gold) s.theme = 'light';
+  document.documentElement.dataset.theme = s.theme;
+  const a = ACCENTS[s.accent] || ACCENTS.indigo;
+  const r = document.documentElement.style;
+  r.setProperty('--brand', a[0]); r.setProperty('--brand-2', a[1]);
+  r.setProperty('--cw', DENS[s.density] || DENS.cozy);
+  document.body.classList.toggle('nomotion', !s.motion);
+  document.body.classList.toggle('notags', !s.tags);
+}
+
+/* ---------------- toasts + confetti ---------------- */
+function toast(msg, o = {}) {
+  const box = $('#toasts');
+  const el = document.createElement('div');
+  el.className = 'toast';
+  el.innerHTML = (o.icon ? `<span class="e">${o.icon}</span>` : '') + `<div>${esc(msg)}${o.sub ? `<small>${esc(o.sub)}</small>` : ''}</div>`;
+  box.appendChild(el);
+  while (box.children.length > 4) box.firstChild.remove();
+  setTimeout(() => { el.classList.add('out'); setTimeout(() => el.remove(), 320); }, o.ms || 2800);
+}
+const fx = { cv: null, cx: null, parts: [], run: false };
+function confetti(o = {}) {
+  if (!S.settings.confetti || !S.settings.motion) return;
+  if (!fx.cv) { fx.cv = $('#fx'); fx.cx = fx.cv.getContext('2d'); }
+  fx.cv.width = innerWidth; fx.cv.height = innerHeight;
+  const n = o.n || 110, x = o.x == null ? innerWidth / 2 : o.x, y = o.y == null ? innerHeight * .38 : o.y;
+  const cols = ['#5b5ef4', '#8b5cf6', '#ec4899', '#f59e0b', '#10b981', '#06b6d4', '#ef4444'];
+  for (let i = 0; i < n; i++) {
+    const ang = Math.random() * Math.PI * 2, sp = 4 + Math.random() * 9;
+    fx.parts.push({ x, y, vx: Math.cos(ang) * sp, vy: Math.sin(ang) * sp - 5, g: .22, life: 90 + Math.random() * 60, r: 4 + Math.random() * 5, c: cols[i % cols.length], rot: Math.random() * 6, vr: (Math.random() - .5) * .4, glyph: o.glyph && Math.random() < .5 ? o.glyph : null });
+  }
+  if (!fx.run) { fx.run = true; requestAnimationFrame(fxLoop); }
+}
+function fxLoop() {
+  const c = fx.cx; c.clearRect(0, 0, fx.cv.width, fx.cv.height);
+  fx.parts = fx.parts.filter(p => p.life > 0 && p.y < fx.cv.height + 40);
+  for (const p of fx.parts) {
+    p.vy += p.g; p.x += p.vx; p.y += p.vy; p.vx *= .99; p.rot += p.vr; p.life--;
+    c.save(); c.translate(p.x, p.y); c.rotate(p.rot); c.globalAlpha = Math.min(1, p.life / 30);
+    if (p.glyph) { c.font = (p.r * 3) + 'px serif'; c.fillText(p.glyph, 0, 0); }
+    else { c.fillStyle = p.c; c.fillRect(-p.r / 2, -p.r / 2, p.r, p.r * 1.6); }
+    c.restore();
+  }
+  if (fx.parts.length) requestAnimationFrame(fxLoop); else { fx.run = false; c.clearRect(0, 0, fx.cv.width, fx.cv.height); }
+}
+
+/* ---------------- game registry ---------------- */
+let ALL = [], ORIG = [];
+const BY = {};
+const ORIG_CAT = { id: 'originals', label: 'Originals', icon: '⭐' };
+function registerOriginals() {
+  ORIG = ORIGINALS.map(o => {
+    const key = 'orig:' + o.id, h = hash(key) % 360, words = o.title.split(' ');
+    return { id: key, key, title: o.title, norm: o.title.toLowerCase(), cat: ORIG_CAT, orig: o, icon: o.icon,
+      mono: (words.length > 1 ? words[0][0] + words[1][0] : o.title.slice(0, 2)).toUpperCase(),
+      c1: `hsl(${h} 78% 58%)`, c2: `hsl(${(h + 48) % 360} 82% 52%)` };
+  });
+  ORIG.forEach(g => { BY[g.key] = g; });
+}
+registerOriginals();
+
+/* ---------------- xp, level, stats ---------------- */
+const sum = o => Object.values(o).reduce((a, b) => a + b, 0);
+function totals() {
+  const plays = sum(S.plays), time = sum(S.time), cats = new Set();
+  for (const k in S.plays) if (BY[k]) cats.add(BY[k].cat.id);
+  return { plays, time, cats: cats.size, favs: S.favs.length, ach: Object.keys(S.ach).length, rated: Object.keys(S.rating).length, gems: S.gems.length };
+}
+function levelInfo() {
+  const t = totals(), xp = t.plays * 10 + Math.floor(t.time / 60) * 3 + t.ach * 50 + t.favs * 2 + t.gems * 25;
+  const lvl = Math.floor(Math.sqrt(xp / 40)) + 1, lo = 40 * (lvl - 1) ** 2, hi = 40 * lvl ** 2;
+  return { xp, lvl, pct: Math.round((xp - lo) / (hi - lo) * 100), next: hi - xp };
+}
+
+/* ---------------- achievements ---------------- */
+const ACH = [
+  { id: 'first', e: '🎮', t: 'Press Start', d: 'Play your first game', p: t => [t.plays, 1] },
+  { id: 'ten', e: '🔥', t: 'Regular', d: 'Play 10 games', p: t => [t.plays, 10] },
+  { id: 'fifty', e: '🏆', t: 'Arcade Rat', d: 'Play 50 games', p: t => [t.plays, 50] },
+  { id: 'fav5', e: '❤️', t: 'Collector', d: 'Favorite 5 games', p: t => [t.favs, 5] },
+  { id: 'fav25', e: '💎', t: 'Curator', d: 'Favorite 25 games', p: t => [t.favs, 25] },
+  { id: 'explorer', e: '🧭', t: 'Explorer', d: 'Play games from 5 categories', p: t => [t.cats, 5] },
+  { id: 'hour', e: '⏱️', t: 'Dedicated', d: 'Play for 60 minutes total', p: t => [Math.floor(t.time / 60), 60] },
+  { id: 'streak3', e: '📅', t: 'On a Roll', d: 'Keep a 3 day streak', p: () => [S.streak.best, 3] },
+  { id: 'critic', e: '⭐', t: 'Critic', d: 'Rate 5 games', p: t => [t.rated, 5] },
+  { id: 'owl', e: '🦉', t: 'Night Owl', d: 'Play after 10pm', f: 'owl' },
+  { id: 'stylist', e: '🎨', t: 'Stylist', d: 'Change the theme', f: 'stylist' },
+  { id: 'big', e: '🖥️', t: 'Big Screen', d: 'Use fullscreen', f: 'big' },
+  { id: 'cinema', e: '🎬', t: 'Cinema', d: 'Use the large player', f: 'cinema' },
+  { id: 'lucky', e: '🎲', t: 'Feeling Lucky', d: 'Spin the roulette', f: 'lucky' },
+  { id: 'home', e: '⭐', t: 'Home Grown', d: 'Play an original', f: 'home' },
+  { id: 'gem1', e: '🔍', t: 'Gem Hunter', d: 'Find your first gem', p: t => [t.gems, 1] },
+  { id: 'gemall', e: '👑', t: 'Treasure Master', d: 'Find all 7 gems', p: t => [t.gems, 7] },
+  { id: 'cracker', e: '🔓', t: 'Code Cracker', d: 'Open the vault', f: 'cracker' }
+];
+function checkAch() {
+  const t = totals();
+  for (const a of ACH) {
+    if (S.ach[a.id]) continue;
+    const ok = a.f ? !!S.flags[a.f] : (() => { const [c, m] = a.p(t); return c >= m; })();
+    if (ok) {
+      S.ach[a.id] = Date.now(); save();
+      toast('Achievement unlocked: ' + a.t, { icon: a.e, sub: a.d, ms: 3600 });
+      confetti({ n: 70 });
+      if (CUR_TAB() === 'profile') PAGES.profile();
+    }
+  }
+  updateBadges();
+}
+function flag(f) { if (!S.flags[f]) { S.flags[f] = 1; save(); checkAch(); } }
+
+/* ---------------- treasure hunt ---------------- */
+const GEMS = [
+  { id: 'logo', e: '🪙', n: 'The Poked Logo', c: 'The face of the site loves attention. Poke it again and again.' },
+  { id: 'konami', e: '🕹️', n: 'Old School', c: 'An 80s cheat code whispers: thirty lives, ten keys.' },
+  { id: 'xyzzy', e: '🔮', n: 'The Magic Word', c: 'Ask the search bar for the word from an old text adventure.' },
+  { id: 'version', e: '🧪', n: 'Version Secret', c: 'Settings hides a number nobody reads. Poke it three times.' },
+  { id: 'heart', e: '💗', n: 'Footer Love', c: 'The very bottom of every page has a heart that wants love.' },
+  { id: 'glitter', e: '✨', n: 'Library Glitter', c: 'Something twinkles near the title of the Library page.' },
+  { id: 'five', e: '🌟', n: 'Perfect Score', c: 'Five stars is the best score. Give it to any game.' }
+];
+function findGem(id) {
+  if (S.gems.includes(id)) return;
+  const g = GEMS.find(x => x.id === id); if (!g) return;
+  S.gems.push(id); save();
+  toast(`Gem found: ${g.n}`, { icon: g.e, sub: `${S.gems.length} of ${GEMS.length}` });
+  confetti({ n: 60 });
+  if (S.gems.length === GEMS.length && !S.flags.gold) {
+    S.flags.gold = 1; save();
+    setTimeout(() => { toast('Treasure unlocked!', { icon: '👑', sub: 'The secret Gold theme is yours. See Settings.', ms: 4500 }); confetti({ n: 220 }); }, 900);
+  }
+  checkAch();
+  if (CUR_TAB() === 'treasure') PAGES.treasure();
+}
+function updateBadges() {
+  $('#bFav').textContent = S.favs.length;
+  $('#bGem').textContent = S.gems.length + '/' + GEMS.length;
+  $('#bLib').textContent = (ALL.length || 0).toLocaleString();
+}
+const CUR_TAB = () => document.body.dataset.tab || 'home';
+
+/* ======================= library: loading, cards, search ======================= */
+let loaded = false, loading = false;
+const PAGES = {};
+const POOL = () => ORIG.concat(ALL);
+const isFav = k => S.favs.includes(k);
+
+function loadScript(src) {
+  return new Promise((res, rej) => {
+    const s = document.createElement('script');
+    const t = setTimeout(() => { s.remove(); rej(new Error('timed out')); }, 8000);
+    s.src = src;
+    s.onload = () => { clearTimeout(t); res(); };
+    s.onerror = () => { clearTimeout(t); s.remove(); rej(new Error('blocked')); };
+    document.head.appendChild(s);
+  });
+}
+function parseList(txt) {
+  const m = txt.match(/let\s+files\s*=\s*(\[[\s\S]*?\])\s*;/);
+  if (!m) throw new Error('unexpected list format');
+  try { return JSON.parse(m[1]); } catch (e) { return (new Function('return ' + m[1]))(); }
+}
+async function getList() {
+  const errs = [];
+  if (typeof files !== 'undefined' && Array.isArray(files)) return files;
+  for (const mir of CONFIG.mirrors) {
+    const url = mir + CONFIG.listPath;
+    try {
+      const r = await fetch(url);
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      return parseList(await r.text());
+    } catch (e) { errs.push(e.message); }
+    try { await loadScript(url); if (typeof files !== 'undefined' && Array.isArray(files)) return files; } catch (e) { errs.push(e.message); }
+  }
+  throw new Error(errs.slice(0, 2).join(', '));
+}
+let loadWaiters = [];
+function ensureLoaded() {
+  if (loaded) return Promise.resolve();
+  const p = new Promise(r => loadWaiters.push(r));
+  if (!loading) {
+    loading = true;
+    getList().then(arr => {
+      ALL = buildGames(arr);
+      ALL.forEach(g => { BY[g.key] = g; });
+      loaded = true; loading = false;
+      updateBadges();
+      loadWaiters.forEach(r => r()); loadWaiters = [];
+    }).catch(err => {
+      loading = false;
+      libError(err.message);
+      if (CUR_TAB() === 'home') PAGES.home();
+    });
+  }
+  return p;
+}
+function libError(msg) {
+  $('#grid').innerHTML = '';
+  $('#state').innerHTML = `<div class="state"><div class="big">📡</div><h3>Couldn't load the library</h3><p>${esc(msg || 'Network problem')}. If you opened this inside a preview pane, save the file and open it straight in your browser. Made by Niam.</p><button class="btn" data-act="retry" type="button">Try again</button></div>`;
+}
+
+/* ---------------- cards ---------------- */
+const HEART = '<svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>';
+function hl(title, tokens) {
+  if (!tokens || !tokens.length) return esc(title);
+  const low = title.toLowerCase(), ranges = [];
+  for (const t of tokens) { const i = low.indexOf(t); if (i > -1) ranges.push([i, i + t.length]); }
+  if (!ranges.length) return esc(title);
+  ranges.sort((a, b) => a[0] - b[0]);
+  const merged = [ranges[0].slice()];
+  for (const r of ranges.slice(1)) { const l = merged[merged.length - 1]; if (r[0] <= l[1]) l[1] = Math.max(l[1], r[1]); else merged.push(r.slice()); }
+  let out = '', pos = 0;
+  for (const [a, b] of merged) { out += esc(title.slice(pos, a)) + '<mark>' + esc(title.slice(a, b)) + '</mark>' + ''; pos = b; }
+  return out + esc(title.slice(pos));
+}
+function cardHTML(g, tokens, i) {
+  const f = isFav(g.key), pc = S.plays[g.key] || 0, r = S.rating[g.key] || 0;
+  return `<article class="card" role="button" tabindex="0" data-k="${esc(g.key)}" aria-label="Play ${esc(g.title)}" style="animation-delay:${Math.min(i || 0, 14) * 24}ms">
+    <div class="art" style="--a:${g.c1};--b:${g.c2}">
+      <span class="mono" aria-hidden="true">${g.icon ? g.icon : esc(g.mono)}</span>
+      <span class="tag">${g.cat.icon} ${esc(g.cat.label)}</span>
+      ${pc ? `<span class="pc">▶ ${pc}</span>` : ''}
+      <button class="fav" type="button" data-fav="${esc(g.key)}" aria-pressed="${f}" aria-label="${f ? 'Remove from' : 'Add to'} favorites">${HEART}</button>
+      <span class="play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>Play</span>
+    </div>
+    <div class="meta"><h3>${hl(g.title, tokens)}</h3><p><span>${esc(g.cat.label)}</span>${r ? `<span class="stars">★ ${r}</span>` : ''}</p></div>
+  </article>`;
+}
+const gridOf = (list, cls) => `<div class="${cls || 'grid'}">${list.map((g, i) => cardHTML(g, [], i)).join('')}</div>`;
+const rowOf = (title, sub, list, act) => list.length ? `<div class="sec-h"><h2>${title}</h2>${act || `<span>${sub || ''}</span>`}</div><div class="strip">${list.map((g, i) => cardHTML(g, [], i)).join('')}</div>` : '';
+
+/* ---------------- favorites ---------------- */
+function toggleFav(key) {
+  const i = S.favs.indexOf(key);
+  if (i > -1) S.favs.splice(i, 1); else { S.favs.unshift(key); toast('Added to favorites', { icon: '❤️' }); }
+  save();
+  $$('[data-fav]').forEach(b => { if (b.dataset.fav === key) { const f = isFav(key); b.setAttribute('aria-pressed', f); } });
+  $$('.fv').forEach(b => { if (b.dataset.fv === key) b.setAttribute('aria-pressed', isFav(key)); });
+  if (CUR_TAB() === 'favorites') PAGES.favorites();
+  if (typeof renderPS === 'function') renderPS();
+  if (typeof syncPlayerFav === 'function') syncPlayerFav();
+  checkAch();
+}
+
+/* ---------------- library page ---------------- */
+let LQ = '', activeCat = 'all', letter = '', view = [], shown = 0, shuffleSeed = 1;
+const PAGE = 84;
+const grid = $('#grid'), stateEl = $('#state'), moreBtn = $('#more');
+const titleLetter = g => { const c = g.title.charAt(0).toUpperCase(); return /[A-Z]/.test(c) ? c : '#'; };
+
+PAGES.library = function () {
+  $('#grid').className = 'grid' + (S.settings.view === 'list' ? ' list' : '');
+  $$('#viewSeg button').forEach(b => b.setAttribute('aria-pressed', b.dataset.v === S.settings.view));
+  $('#sort').value = S.settings.sort;
+  if (!loaded) {
+    grid.innerHTML = Array.from({ length: 14 }, () => '<div class="skel"></div>').join('');
+    stateEl.innerHTML = ''; moreBtn.hidden = true;
+    ensureLoaded().then(() => { if (CUR_TAB() === 'library') refreshLib(); });
+    return;
+  }
+  refreshLib();
+};
+
+function refreshLib() {
+  if (!loaded) return;
+  const q = LQ.trim().toLowerCase(), tokens = q.split(/\s+/).filter(Boolean);
+  let pool = POOL(), scores = null;
+  if (tokens.length) {
+    scores = new Map();
+    pool = pool.filter(g => { const s = scoreGame(g, q, tokens); if (s > 0) { scores.set(g.key, s); return true; } return false; });
+  }
+  const counts = {}; pool.forEach(g => { counts[g.cat.id] = (counts[g.cat.id] || 0) + 1; });
+  const favCount = pool.filter(g => isFav(g.key)).length;
+  let html = chipHTML('all', 'All', '✨', pool.length);
+  if (S.favs.length) html += chipHTML('fav', 'Favorites', '❤️', favCount);
+  if (counts.originals) html += chipHTML('originals', 'Originals', '⭐', counts.originals);
+  for (const c of CATS) if (counts[c.id]) html += chipHTML(c.id, c.label, c.icon, counts[c.id]);
+  $('#chips').innerHTML = html;
+
+  let list = pool;
+  if (activeCat === 'fav') list = pool.filter(g => isFav(g.key));
+  else if (activeCat !== 'all') list = pool.filter(g => g.cat.id === activeCat);
+
+  const have = new Set(list.map(titleLetter));
+  $('#letters').innerHTML = '<button data-letter="" aria-pressed="' + (letter === '') + '">All</button>' +
+    '#ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').map(c => `<button data-letter="${c}" aria-pressed="${letter === c}" ${have.has(c) ? '' : 'disabled'}>${c}</button>`).join('');
+  if (letter) list = list.filter(g => titleLetter(g) === letter);
+
+  const sm = S.settings.sort;
+  if (scores) list = list.slice().sort((a, b) => scores.get(b.key) - scores.get(a.key) || a.title.localeCompare(b.title));
+  else if (sm === 'za') list = list.slice().sort((a, b) => b.title.localeCompare(a.title, undefined, { numeric: true }));
+  else if (sm === 'most') list = list.slice().sort((a, b) => (S.plays[b.key] || 0) - (S.plays[a.key] || 0) || a.title.localeCompare(b.title));
+  else if (sm === 'rated') list = list.slice().sort((a, b) => (S.rating[b.key] || 0) - (S.rating[a.key] || 0) || a.title.localeCompare(b.title));
+  else if (sm === 'shuffle') list = list.slice().sort((a, b) => hash(a.key + shuffleSeed) - hash(b.key + shuffleSeed));
+  else list = list.slice().sort((a, b) => a.title.localeCompare(b.title, undefined, { numeric: true }));
+
+  view = list;
+  const label = activeCat === 'all' ? 'All games' : activeCat === 'fav' ? 'Favorites' : activeCat === 'originals' ? 'Originals' : CAT_BY_ID[activeCat].label;
+  $('#listTitle').textContent = tokens.length ? `Results for “${LQ.trim()}”` : label;
+  $('#listSub').textContent = `${list.length.toLocaleString()} ${list.length === 1 ? 'game' : 'games'}`;
+  $('#sort').disabled = !!tokens.length;
+  renderGrid(true);
+}
+const chipHTML = (id, label, icon, n) => `<button class="chip-b" type="button" data-cat="${id}" aria-pressed="${activeCat === id}">${icon} ${esc(label)} <small>${n.toLocaleString()}</small></button>`;
+
+function renderGrid(reset) {
+  const tokens = LQ.trim().toLowerCase().split(/\s+/).filter(Boolean);
+  if (reset) { grid.innerHTML = ''; shown = 0; stateEl.innerHTML = ''; }
+  if (reset && !view.length) {
+    stateEl.innerHTML = activeCat === 'fav' && !LQ.trim()
+      ? `<div class="state"><div class="big">❤️</div><h3>No favorites yet</h3><p>Tap the heart on any game to keep it here. Made by Niam.</p></div>`
+      : `<div class="state"><div class="big">🔎</div><h3>Nothing matched</h3><p>Try a shorter search, another spelling, or pick a category. Made by Niam.</p><button class="btn" data-act="resetFilters" type="button">Clear filters</button></div>`;
+    moreBtn.hidden = true; return;
+  }
+  const next = view.slice(shown, shown + PAGE);
+  grid.insertAdjacentHTML('beforeend', next.map((g, i) => cardHTML(g, tokens, i)).join(''));
+  shown += next.length;
+  moreBtn.hidden = shown >= view.length;
+}
+new IntersectionObserver(en => { if (en[0].isIntersecting && loaded && CUR_TAB() === 'library' && shown < view.length) renderGrid(false); }, { rootMargin: '700px' }).observe($('#sentinel'));
+
+/* ---------------- top search ---------------- */
+const gq = $('#gq');
+function syncSearchUI() { const has = !!gq.value; $('#gqClear').hidden = !has; $('#slash').hidden = has; }
+let gqT;
+gq.addEventListener('input', () => {
+  LQ = gq.value; syncSearchUI();
+  if (/xyzzy/i.test(LQ)) findGem('xyzzy');
+  clearTimeout(gqT);
+  gqT = setTimeout(() => {
+    S.counters.searches++; save();
+    if (CUR_TAB() !== 'library') go('library'); else refreshLib();
+  }, 80);
+});
+gq.addEventListener('keydown', e => {
+  if (e.key === 'Escape') { gq.value = ''; LQ = ''; syncSearchUI(); if (CUR_TAB() === 'library') refreshLib(); gq.blur(); }
+  if (e.key === 'Enter' && view[0] && CUR_TAB() === 'library') { e.preventDefault(); play(view[0].key); }
+});
+$('#gqClear').addEventListener('click', () => { gq.value = ''; LQ = ''; syncSearchUI(); if (CUR_TAB() === 'library') refreshLib(); gq.focus(); });
+
+/* ======================= pages ======================= */
+function dailySeed() { return hash('niamverse' + todayStr()); }
+function gameOfDay() { return ALL.length ? ALL[dailySeed() % ALL.length] : null; }
+const catHue = i => (i * 41 + 235) % 360;
+
+PAGES.home = function () {
+  const el = $('#p-home'), t = totals(), li = levelInfo(), g = loaded ? gameOfDay() : null;
+  const hello = t.plays ? `Welcome back, ${esc(S.settings.name)}` : 'Welcome to Niamverse';
+  let h = `<section class="hero">
+    <h1>${hello}</h1>
+    <p>Thousands of games in one tidy universe. Search fast, favorite the good ones, and play in a big window with a sidebar. Made by Niam.</p>
+    <div class="cta"><button class="btn" data-go="library" type="button">Browse the library</button><button class="btn ghost" data-act="roulette" type="button">Surprise me</button>${g ? `<button class="btn ghost" data-act="playGotd" type="button">Play game of the day</button>` : ''}</div>
+    <div class="chiprow"><span class="stat">🎮 ${loaded ? ALL.length.toLocaleString() : '...'} games</span><span class="stat">❤️ ${S.favs.length} favorites</span><span class="stat">🔥 ${S.streak.count || 0} day streak</span><span class="stat">💎 ${S.gems.length}/${GEMS.length} gems</span></div>
+  </section>`;
+  if (!loaded) {
+    h += `<div class="sec-h"><h2>Loading games</h2></div><div class="grid">${Array.from({ length: 8 }, () => '<div class="skel"></div>').join('')}</div>`;
+    el.innerHTML = h;
+    ensureLoaded().then(() => { if (CUR_TAB() === 'home') PAGES.home(); });
+    return;
+  }
+  h += `<div class="two">
+    <div class="gotd" data-k="${esc(g.key)}" style="cursor:pointer"><div class="art" style="--a:${g.c1};--b:${g.c2}"><span class="mono">${esc(g.mono)}</span></div>
+      <div class="info"><span class="lbl">Game of the day</span><h3>${esc(g.title)}</h3><p>${g.cat.icon} ${esc(g.cat.label)}. A new pick every day.</p><div><button class="btn sm" type="button">Play now</button></div></div></div>
+    <div class="box"><div class="lvl"><div class="n">${li.lvl}</div><div style="flex:1"><b>Level ${li.lvl}</b><br><small>${li.xp} XP, ${li.next} to next level</small></div></div>
+      <div class="bar-bg"><i style="width:${li.pct}%"></i></div>
+      <p style="margin:12px 0 0;color:var(--muted);font-size:13px">Play, favorite, rate, and hunt gems to earn XP.</p></div>
+  </div>`;
+  const recent = S.recent.map(r => BY[r.k]).filter(Boolean).filter((x, i, a) => a.indexOf(x) === i).slice(0, 12);
+  h += rowOf('Continue playing', 'Pick up where you left off', recent, '<button data-go="recent" type="button">See all</button>');
+  const favs = S.favs.map(k => BY[k]).filter(Boolean).slice(0, 12);
+  h += rowOf('Your favorites', '', favs, '<button data-go="favorites" type="button">See all</button>');
+  const most = POOL().filter(x => S.plays[x.key]).sort((a, b) => S.plays[b.key] - S.plays[a.key]).slice(0, 12);
+  h += rowOf('Most played', 'Your all time top games', most);
+  const seed = dailySeed();
+  const fresh = ALL.slice().sort((a, b) => hash(a.key + seed) - hash(b.key + seed)).slice(0, 14);
+  h += rowOf('Fresh picks today', 'Shuffled daily', fresh);
+  const present = CATS.filter(c => ALL.some(x => x.cat === c));
+  h += `<div class="sec-h"><h2>Browse by category</h2></div><div class="cats">${present.map((c, i) => {
+    const n = ALL.filter(x => x.cat === c).length;
+    return `<button class="cat-tile" type="button" data-act="libcat" data-cat="${c.id}" style="background:linear-gradient(135deg,hsl(${catHue(i)} 75% 56%),hsl(${catHue(i) + 40} 80% 50%))"><span class="e">${c.icon}</span><span><b>${esc(c.label)}</b><br><small>${n.toLocaleString()} games</small></span></button>`;
+  }).join('')}</div>`;
+  el.innerHTML = h;
+};
+
+PAGES.favorites = function () {
+  const el = $('#p-favorites');
+  const list = S.favs.map(k => BY[k]).filter(Boolean);
+  let h = `<h1 class="pt">Favorites</h1><p class="psub">Your personal shortlist. ${list.length} saved.</p>`;
+  if (!loaded && S.favs.length) { el.innerHTML = h + '<div class="grid" style="margin-top:20px">' + Array.from({ length: 6 }, () => '<div class="skel"></div>').join('') + '</div>'; ensureLoaded().then(() => { if (CUR_TAB() === 'favorites') PAGES.favorites(); }); return; }
+  if (!list.length) h += `<div class="state"><div class="big">❤️</div><h3>No favorites yet</h3><p>Tap the heart on any game card, or use the Favorite button inside the player.</p><button class="btn" data-go="library" type="button">Find games</button></div>`;
+  else h += `<div class="toolbar"><h2>${list.length} ${list.length === 1 ? 'game' : 'games'}</h2><div class="tools"><button class="btn sm" data-act="randFav" type="button">Play a random favorite</button></div></div>${gridOf(list, 'grid' + (S.settings.view === 'list' ? ' list' : ''))}`;
+  el.innerHTML = h;
+};
+
+PAGES.recent = function () {
+  const el = $('#p-recent');
+  const seen = new Set(), items = [];
+  for (const r of S.recent) if (BY[r.k] && !seen.has(r.k)) { seen.add(r.k); items.push({ g: BY[r.k], t: r.t }); }
+  let h = `<h1 class="pt">Recently played</h1><p class="psub">Jump back into anything you played lately.</p>`;
+  if (!loaded && S.recent.length && !items.length) { ensureLoaded().then(() => { if (CUR_TAB() === 'recent') PAGES.recent(); }); }
+  if (!items.length) h += `<div class="state"><div class="big">🕘</div><h3>Nothing played yet</h3><p>Games you play will show up here with how long you played.</p><button class="btn" data-go="library" type="button">Pick a game</button></div>`;
+  else h += `<div class="toolbar"><h2>${items.length} games</h2><div class="tools"><button class="btn ghost sm" data-act="clearRecent" type="button">Clear history</button></div></div><div class="rows">${items.slice(0, 40).map(({ g, t }) => `<div class="row" data-k="${esc(g.key)}" tabindex="0" role="button">
+      <div class="tile" style="--a:${g.c1};--b:${g.c2}">${g.icon || esc(g.mono)}</div>
+      <div class="t"><b>${esc(g.title)}</b><small>${g.cat.icon} ${esc(g.cat.label)} · played ${S.plays[g.key] || 1}x · ${fmtTime(S.time[g.key] || 0)}</small></div>
+      <span class="x">${ago(t)}</span><button class="fav" style="position:static;background:var(--surface-2)" type="button" data-fav="${esc(g.key)}" aria-pressed="${isFav(g.key)}" aria-label="Favorite">${HEART}</button></div>`).join('')}</div>`;
+  el.innerHTML = h;
+};
+
+PAGES.originals = function () {
+  const el = $('#p-originals');
+  let h = `<h1 class="pt">Originals</h1><p class="psub">Games made by Niam, right here in Niamverse.</p><div class="rows" style="margin-top:20px;gap:14px">`;
+  if (!ORIG.length) h += `<div class="state"><div class="big">🛠️</div><h3>No originals yet</h3><p>Add your first game below and it shows up here.</p></div>`;
+  h += ORIG.map(g => `<div class="orig-card" data-k="${esc(g.key)}" style="cursor:pointer">
+    <div class="tile" style="--a:${g.c1};--b:${g.c2}">${g.icon || esc(g.mono)}</div>
+    <div><h3>${esc(g.title)}</h3><p>${esc(g.orig.desc || 'An original by Niam.')}</p><p style="margin-top:6px">⭐ Original · played ${S.plays[g.key] || 0}x · ${fmtTime(S.time[g.key] || 0)}</p></div>
+    <div><button class="btn" type="button">Play</button></div></div>`).join('');
+  h += `</div><div class="box" style="margin-top:22px"><h3>How to add your own game</h3>
+    <p style="margin:0;color:var(--ink-2)">Open this file, find the <b>ORIGINALS</b> list near the top of the script, and add an object like this. It appears here, in search, in favorites, and in your stats.</p>
+    <pre class="code">${esc(`{
+  id: 'my-game',            // unique, no spaces
+  title: 'My Game',
+  icon: '🚀',               // optional emoji
+  desc: 'What it is in one line.',
+  html: '<!doctype html>...your full game page...'
+  // or  url: 'games/my-game.html'
+},`)}</pre></div>`;
+  el.innerHTML = h;
+};
+
+PAGES.treasure = function () {
+  const el = $('#p-treasure'), n = S.gems.length;
+  el.innerHTML = `<h1 class="pt">Treasure hunt</h1><p class="psub">Seven gems are hidden around Niamverse. Each riddle points to one. Find them all to unlock a secret.</p>
+    <div class="box" style="margin-top:18px"><div style="display:flex;justify-content:space-between;margin-bottom:10px"><b>${n} of ${GEMS.length} found</b><span style="color:var(--muted)">${n === GEMS.length ? 'Treasure unlocked' : 'Keep hunting'}</span></div><div class="bar-bg"><i style="width:${Math.round(n / GEMS.length * 100)}%"></i></div></div>
+    <div class="gems">${GEMS.map(g => { const f = S.gems.includes(g.id); return `<div class="gem ${f ? 'found' : ''}"><div class="e">${f ? g.e : '💎'}</div><p>${f ? esc(g.n) : esc(g.c)}</p></div>`; }).join('')}</div>
+    ${S.flags.gold ? `<div class="box" style="margin-top:18px;border-color:#f1d36b;text-align:center"><div style="font-size:34px">👑</div><b>You found everything.</b><p style="margin:4px 0 12px;color:var(--muted)">The secret Gold theme is unlocked. Turn it on in Settings.</p><button class="btn" data-act="useGold" type="button">Use Gold theme</button></div>` : ''}
+    <div class="vault"><div class="e">🔐</div><div style="flex:1;min-width:200px"><h3>The vault</h3><p>One secret is locked behind a 4 digit password.</p></div><button class="btn" data-act="crush" type="button">Reveal Niam's Crush</button></div>`;
+};
+
+PAGES.profile = function () {
+  const el = $('#p-profile'), t = totals(), li = levelInfo();
+  const top = POOL().filter(g => S.plays[g.key]).sort((a, b) => S.plays[b.key] - S.plays[a.key]).slice(0, 5);
+  const maxP = top.length ? S.plays[top[0].key] : 1;
+  const byCat = {};
+  for (const k in S.time) if (BY[k]) byCat[BY[k].cat.label] = (byCat[BY[k].cat.label] || 0) + S.time[k];
+  const catRows = Object.entries(byCat).sort((a, b) => b[1] - a[1]).slice(0, 6), maxT = catRows.length ? catRows[0][1] : 1;
+  el.innerHTML = `<h1 class="pt">${esc(S.settings.name)}'s profile</h1><p class="psub">Your stats, level, and achievements.</p>
+    <div class="two"><div class="box"><div class="lvl"><div class="n">${li.lvl}</div><div style="flex:1"><b>Level ${li.lvl}</b><br><small>${li.xp} XP, ${li.next} to level ${li.lvl + 1}</small></div></div><div class="bar-bg"><i style="width:${li.pct}%"></i></div></div>
+    <div class="box"><h3>Daily streak</h3><b style="font-size:30px">🔥 ${S.streak.count || 0}</b> <span style="color:var(--muted)">days, best ${S.streak.best || 0}</span></div></div>
+    <div class="stats"><div class="stat-c"><small>Games played</small><b>${t.plays}</b></div><div class="stat-c"><small>Time played</small><b>${fmtTime(t.time)}</b></div><div class="stat-c"><small>Favorites</small><b>${t.favs}</b></div><div class="stat-c"><small>Categories tried</small><b>${t.cats}</b></div><div class="stat-c"><small>Games rated</small><b>${t.rated}</b></div><div class="stat-c"><small>Gems found</small><b>${t.gems}/${GEMS.length}</b></div></div>
+    <div class="two"><div class="box"><h3>Top games</h3><div class="bars">${top.length ? top.map(g => `<div class="b"><span>${esc(g.title)}</span><div class="bar-bg"><i style="width:${Math.round(S.plays[g.key] / maxP * 100)}%"></i></div><span>${S.plays[g.key]}x</span></div>`).join('') : '<span style="color:var(--muted)">Play something to see this.</span>'}</div></div>
+    <div class="box"><h3>Time by category</h3><div class="bars">${catRows.length ? catRows.map(([n, v]) => `<div class="b"><span>${esc(n)}</span><div class="bar-bg"><i style="width:${Math.round(v / maxT * 100)}%"></i></div><span>${fmtTime(v)}</span></div>`).join('') : '<span style="color:var(--muted)">Nothing yet.</span>'}</div></div></div>
+    <div class="sec-h"><h2>Achievements</h2><span>${t.ach} of ${ACH.length} unlocked</span></div>
+    <div class="ach-grid">${ACH.map(a => { const done = !!S.ach[a.id]; let bar = ''; if (a.p && !done) { const [c, m] = a.p(t); bar = `<div class="bar-bg"><i style="width:${Math.min(100, Math.round(c / m * 100))}%"></i></div>`; } return `<div class="ach ${done ? '' : 'locked'}"><div class="e">${a.e}</div><div style="flex:1"><b>${esc(a.t)}</b><p>${esc(a.d)}</p>${done ? '<small style="color:var(--ok);font-weight:700">Unlocked</small>' : bar}</div></div>`; }).join('')}</div>`;
+};
+
+PAGES.settings = function () {
+  const s = S.settings, el = $('#p-settings');
+  const seg = (key, opts) => `<div class="seg">${opts.map(([v, l]) => `<button data-set="${key}" data-v="${v}" aria-pressed="${s[key] === v}" ${v === 'gold' && !S.flags.gold ? 'disabled style="opacity:.4"' : ''}>${l}</button>`).join('')}</div>`;
+  const tg = (key, label, sub) => `<div class="set-row"><div><b>${label}</b><small>${sub}</small></div><label class="sw"><input type="checkbox" data-tg="${key}" ${s[key] ? 'checked' : ''}><span></span></label></div>`;
+  el.innerHTML = `<h1 class="pt">Settings</h1><p class="psub">Make Niamverse yours. Everything saves automatically.</p>
+  <div class="box set-sec"><h3>Look and feel</h3>
+    <div class="set-row"><div><b>Theme</b><small>Gold unlocks when you finish the treasure hunt</small></div>${seg('theme', THEMES.map(([v, l]) => [v, l.replace(' (secret)', '')]))}</div>
+    <div class="set-row"><div><b>Accent color</b></div><div class="swatches">${Object.entries(ACCENTS).map(([k, v]) => `<button class="swatch" data-set="accent" data-v="${k}" aria-pressed="${s.accent === k}" aria-label="${k}" style="background:linear-gradient(135deg,${v[0]},${v[1]})"></button>`).join('')}</div></div>
+    <div class="set-row"><div><b>Card size</b></div>${seg('density', [['compact', 'Compact'], ['cozy', 'Cozy'], ['large', 'Large']])}</div>
+    <div class="set-row"><div><b>Layout</b></div>${seg('view', [['grid', 'Grid'], ['list', 'List']])}</div>
+    ${tg('tags', 'Category tags on cards', 'Show the little category label on each card')}
+    ${tg('motion', 'Animations', 'Turn off for a calmer, faster feel')}
+    ${tg('confetti', 'Confetti', 'Celebrate achievements and gems')}</div>
+  <div class="box set-sec"><h3>Player</h3>
+    ${tg('sidebar', 'Open the sidebar by default', 'Search and favorites next to your game')}
+    ${tg('startLarge', 'Start in large player', 'Games open filling the whole page')}</div>
+  <div class="box set-sec"><h3>You</h3>
+    <div class="set-row"><div><b>Display name</b><small>Shown on Home and Profile</small></div><input class="txt" data-name maxlength="18" value="${esc(s.name)}" aria-label="Display name"></div>
+    ${tg('remember', 'Remember my last tab', 'Reopen where you left off')}</div>
+  <div class="box set-sec"><h3>Your data</h3><p style="margin:0 0 12px;color:var(--muted)">Everything lives in this browser. Export a backup to move it somewhere else.</p>
+    <div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn ghost sm" data-act="export" type="button">Export backup</button><button class="btn ghost sm" data-act="import" type="button">Import backup</button><button class="btn ghost sm" data-act="clearRecent" type="button">Clear recents</button><button class="btn ghost sm" data-act="clearFavs" type="button">Clear favorites</button><button class="btn danger sm" data-act="resetAll" type="button">Reset everything</button></div></div>
+  <div class="box set-sec"><h3>About</h3><p style="margin:0;color:var(--ink-2)"><b>Niamverse</b> <span id="ver" style="cursor:pointer;user-select:none">v1.0.0</span><br>Made by Niam. Thanks to Riha for the idea.</p></div>`;
+};
+
+/* ---------------- navigation ---------------- */
+const TABS = ['home', 'library', 'favorites', 'recent', 'originals', 'treasure', 'profile', 'settings'];
+function go(tab) {
+  if (!TABS.includes(tab)) tab = 'home';
+  document.body.dataset.tab = tab;
+  TABS.forEach(t => { $('#p-' + t).hidden = t !== tab; });
+  $$('.rail-btn').forEach(b => b.setAttribute('aria-current', b.dataset.tab === tab ? 'page' : 'false'));
+  if (S.settings.remember) { S.tab = tab; save(); }
+  PAGES[tab]();
+  window.scrollTo(0, 0);
+}
+
+/* ======================= player ======================= */
+const playerEl = $('#player'), frame = $('#frame'), pLoading = $('#ploading'), pstage = $('#pstage');
+const htmlCache = new Map();
+let playToken = 0, curKey = null, sessionSecs = 0, tickT = null, psTab = 'fav', lastHtml = null;
+
+function gameUrls(file) {
+  const name = (file.includes('.') && file.lastIndexOf('.') > 0) ? file : file + '.html';
+  return CONFIG.mirrors.map(m => m + CONFIG.filePath + encodeURIComponent(name));
+}
+async function fetchGame(file) {
+  let lastErr;
+  for (const url of gameUrls(file)) {
+    try {
+      const r = await fetch(url);
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      return await r.text();
+    } catch (e) { lastErr = e; }
+  }
+  throw lastErr || new Error('failed');
+}
+
+function startTick() {
+  clearInterval(tickT);
+  tickT = setInterval(() => {
+    if (!curKey || document.hidden) return;
+    sessionSecs++;
+    S.time[curKey] = (S.time[curKey] || 0) + 1;
+    $('#pTimer').textContent = clock(sessionSecs);
+    if (sessionSecs % 15 === 0) { save(); checkAch(); }
+  }, 1000);
+}
+
+function bumpStreak() {
+  const t = todayStr(), st = S.streak;
+  if (st.last === t) return;
+  const y = new Date(); y.setDate(y.getDate() - 1);
+  const ys = y.getFullYear() + '-' + String(y.getMonth() + 1).padStart(2, '0') + '-' + String(y.getDate()).padStart(2, '0');
+  st.count = st.last === ys ? st.count + 1 : 1;
+  st.best = Math.max(st.best, st.count); st.last = t;
+  if (st.count > 1) toast(`${st.count} day streak`, { icon: '🔥' });
+}
+
+async function play(key) {
+  const g = BY[key]; if (!g) return;
+  const my = ++playToken; curKey = key; sessionSecs = 0;
+  $('#pTimer').textContent = '0:00';
+  openPlayer(g);
+  S.plays[key] = (S.plays[key] || 0) + 1;
+  S.recent = [{ k: key, t: Date.now() }, ...S.recent.filter(r => r.k !== key)].slice(0, 40);
+  bumpStreak();
+  if (g.orig) flag('home');
+  if (new Date().getHours() >= 22 || new Date().getHours() < 4) flag('owl');
+  save(); updateBadges(); checkAch();
+  startTick();
+  await loadGame(g, my);
+}
+
+async function loadGame(g, my) {
+  pLoading.hidden = false;
+  pLoading.innerHTML = '<div class="spin"></div><div>Loading ' + esc(g.title) + '</div>';
+  try {
+    let html;
+    if (g.orig) {
+      if (g.orig.html) html = g.orig.html;
+      else if (g.orig.url) { frame.removeAttribute('srcdoc'); frame.src = g.orig.url; frame.onload = () => { if (my === playToken) pLoading.hidden = true; }; return; }
+      else throw new Error('This original has no html or url yet.');
+    } else {
+      html = htmlCache.get(g.file);
+      if (!html) { html = await fetchGame(g.file); htmlCache.set(g.file, html); if (htmlCache.size > 12) htmlCache.delete(htmlCache.keys().next().value); }
+    }
+    if (my !== playToken) return;
+    lastHtml = html;
+    frame.removeAttribute('src');
+    frame.srcdoc = html;
+    frame.onload = () => { if (my === playToken) { pLoading.hidden = true; try { frame.contentWindow.focus(); } catch (e) {} } };
+    setTimeout(() => { if (my === playToken) pLoading.hidden = true; }, 5000);
+  } catch (err) {
+    if (my !== playToken) return;
+    pLoading.hidden = false;
+    pLoading.innerHTML = `<div style="font-size:42px">😵</div><div>This game didn't load</div><p>${esc(err.message || 'Network problem')}. Try Reload, or pick another game from the sidebar.</p><button class="btn" data-act="reloadGame" type="button">Reload</button>`;
+  }
+}
+
+function openPlayer(g) {
+  playerEl.classList.add('open');
+  document.body.style.overflow = 'hidden';
+  playerEl.classList.toggle('noside', !S.settings.sidebar);
+  playerEl.classList.toggle('theater', !!S.settings.startLarge);
+  $('#pTheater').setAttribute('aria-pressed', !!S.settings.startLarge);
+  $('#pSide').setAttribute('aria-pressed', S.settings.sidebar);
+  $('#pTitle').textContent = g.title;
+  $('#pSub').textContent = g.cat.icon + ' ' + g.cat.label + (g.orig ? ' · Original' : '');
+  syncPlayerFav(); renderStars(); renderPS();
+  if (S.settings.startLarge) flag('cinema');
+}
+function closePlayer() {
+  playToken++; clearInterval(tickT); save(true);
+  playerEl.classList.remove('open', 'theater');
+  document.body.style.overflow = '';
+  frame.removeAttribute('srcdoc'); frame.src = 'about:blank';
+  if (document.fullscreenElement) document.exitFullscreen().catch(() => {});
+  curKey = null; lastHtml = null;
+  if (CUR_TAB() === 'home' || CUR_TAB() === 'recent' || CUR_TAB() === 'profile') PAGES[CUR_TAB()]();
+}
+function syncPlayerFav() {
+  if (!curKey) return;
+  const f = isFav(curKey);
+  $('#pFav').setAttribute('aria-pressed', f);
+  $('#pFav span').textContent = f ? 'Favorited' : 'Favorite';
+}
+function renderStars() {
+  const r = curKey ? (S.rating[curKey] || 0) : 0;
+  $('#pStars').innerHTML = [1, 2, 3, 4, 5].map(n => `<button type="button" data-star="${n}" class="${n <= r ? 'on' : ''}" aria-label="${n} star${n > 1 ? 's' : ''}">★</button>`).join('');
+}
+function theater(on) {
+  const v = on == null ? !playerEl.classList.contains('theater') : on;
+  playerEl.classList.toggle('theater', v);
+  $('#pTheater').setAttribute('aria-pressed', v);
+  if (v) flag('cinema');
+}
+function fullscreenGame() {
+  if (document.fullscreenElement) { document.exitFullscreen().catch(() => {}); return; }
+  const el = pstage;
+  (el.requestFullscreen || el.webkitRequestFullscreen || (() => Promise.reject())).call(el)
+    .then(() => { flag('big'); try { frame.contentWindow.focus(); } catch (e) {} })
+    .catch(() => toast('Fullscreen is blocked here', { icon: '🖥️', sub: 'Try Large player instead, or open in a new tab.' }));
+}
+function openNewTab() {
+  if (!lastHtml) { toast('Wait for the game to load first'); return; }
+  const url = URL.createObjectURL(new Blob([lastHtml], { type: 'text/html' }));
+  window.open(url, '_blank');
+  setTimeout(() => URL.revokeObjectURL(url), 120000);
+}
+function reloadGame() {
+  const g = BY[curKey]; if (!g) return;
+  const my = ++playToken;
+  frame.removeAttribute('srcdoc'); frame.src = 'about:blank';
+  loadGame(g, my);
+}
+
+/* ---------- player sidebar ---------- */
+let psQ = '';
+function psItem(g) {
+  return `<div class="ps-item ${g.key === curKey ? 'on' : ''}" data-ps="${esc(g.key)}" role="button" tabindex="0">
+    <div class="tile" style="--a:${g.c1};--b:${g.c2}">${g.icon || esc(g.mono)}</div>
+    <div class="t"><b>${hl(g.title, psQ.toLowerCase().split(/\s+/).filter(Boolean))}</b><small>${esc(g.cat.label)}${S.plays[g.key] ? ' · ' + S.plays[g.key] + 'x' : ''}</small></div>
+    <button class="fv" type="button" data-fv="${esc(g.key)}" aria-pressed="${isFav(g.key)}" aria-label="Favorite">♥</button></div>`;
+}
+function renderPS() {
+  if (!playerEl.classList.contains('open')) return;
+  $$('#psTabs button').forEach(b => b.setAttribute('aria-pressed', b.dataset.pt === psTab));
+  const q = psQ.trim().toLowerCase(), tokens = q.split(/\s+/).filter(Boolean);
+  let list;
+  if (tokens.length) {
+    list = POOL().map(g => [g, scoreGame(g, q, tokens)]).filter(x => x[1] > 0).sort((a, b) => b[1] - a[1]).slice(0, 60).map(x => x[0]);
+  } else if (psTab === 'fav') list = S.favs.map(k => BY[k]).filter(Boolean);
+  else if (psTab === 'recent') list = S.recent.map(r => BY[r.k]).filter(Boolean).filter((x, i, a) => a.indexOf(x) === i).slice(0, 30);
+  else list = ORIG.concat(ALL.slice(0, 40));
+  const box = $('#psList');
+  box.innerHTML = list.length ? list.map(psItem).join('') :
+    `<div class="ps-empty">${tokens.length ? 'No matches' : psTab === 'fav' ? 'No favorites yet.<br>Tap the heart on a game to keep it here.' : psTab === 'recent' ? 'Nothing played yet.' : 'Start typing to search.'}</div>`;
+}
+$('#psTabs').addEventListener('click', e => { const b = e.target.closest('[data-pt]'); if (!b) return; psTab = b.dataset.pt; psQ = ''; $('#psq').value = ''; renderPS(); });
+$('#psq').addEventListener('input', e => { psQ = e.target.value; renderPS(); });
+$('#psList').addEventListener('click', e => {
+  const fv = e.target.closest('[data-fv]');
+  if (fv) { e.stopPropagation(); toggleFav(fv.dataset.fv); return; }
+  const it = e.target.closest('[data-ps]');
+  if (it) play(it.dataset.ps);
+});
+$('#psList').addEventListener('keydown', e => { if ((e.key === 'Enter' || e.key === ' ') && e.target.dataset.ps) { e.preventDefault(); play(e.target.dataset.ps); } });
+
+/* ---------- player buttons ---------- */
+$('#pClose').addEventListener('click', closePlayer);
+$('#pFull').addEventListener('click', fullscreenGame);
+$('#pTheater').addEventListener('click', () => theater());
+$('#pTab').addEventListener('click', openNewTab);
+$('#pReload').addEventListener('click', reloadGame);
+$('#pSide').addEventListener('click', () => { const v = playerEl.classList.toggle('noside'); $('#pSide').setAttribute('aria-pressed', !v); });
+$('#pFav').addEventListener('click', () => { if (curKey) toggleFav(curKey); });
+$('#pStars').addEventListener('click', e => {
+  const b = e.target.closest('[data-star]'); if (!b || !curKey) return;
+  const n = +b.dataset.star;
+  S.rating[curKey] = S.rating[curKey] === n ? 0 : n;
+  if (!S.rating[curKey]) delete S.rating[curKey];
+  save(); renderStars(); checkAch();
+  if (n === 5 && S.rating[curKey] === 5) findGem('five');
+});
+playerEl.addEventListener('click', e => { if (e.target === playerEl) closePlayer(); });
+document.addEventListener('visibilitychange', () => { if (document.hidden) save(true); });
+addEventListener('beforeunload', () => save(true));
+
+/* ======================= modals: roulette, crush ======================= */
+function openModal(id) { $('#' + id).classList.add('open'); }
+function closeModals() { $$('.modal.open').forEach(m => m.classList.remove('open')); }
+$$('.modal').forEach(m => m.addEventListener('click', e => { if (e.target === m || e.target.closest('[data-close]')) m.classList.remove('open'); }));
+
+let rKey = null, rTimer = null;
+async function roulette() {
+  openModal('mRoulette');
+  $('#rTitle').textContent = 'Loading games'; $('#rMono').textContent = '?';
+  await ensureLoaded();
+  const pool = POOL(); if (!pool.length) { $('#rTitle').textContent = 'No games yet'; return; }
+  S.counters.roulette++; save(); flag('lucky');
+  let n = 0; clearInterval(rTimer);
+  rTimer = setInterval(() => {
+    const g = pool[Math.floor(Math.random() * pool.length)];
+    showRoul(g); n++;
+    if (n > 16) { clearInterval(rTimer); $('#rPlay').focus(); confetti({ n: 40, y: innerHeight * .3 }); }
+  }, 70 + 0);
+}
+function showRoul(g) {
+  rKey = g.key;
+  $('#rArt').style.setProperty('--a', g.c1); $('#rArt').style.setProperty('--b', g.c2);
+  $('#rMono').textContent = g.icon || g.mono; $('#rTitle').textContent = g.title; $('#rCat').textContent = g.cat.icon + ' ' + g.cat.label;
+}
+$('#rAgain').addEventListener('click', roulette);
+$('#rPlay').addEventListener('click', () => { if (rKey) { clearInterval(rTimer); closeModals(); play(rKey); } });
+
+/* ---------- crush vault ---------- */
+const pinBox = $('#pin'), pinIn = $$('input', pinBox);
+let tries = 0;
+function resetPin() {
+  pinIn.forEach(i => { i.value = ''; });
+  $('#pinMsg').textContent = ''; $('#crushLock').hidden = false; $('#crushOpen').hidden = true;
+}
+function openCrush() { resetPin(); openModal('mCrush'); setTimeout(() => pinIn[0].focus(), 60); }
+function checkPin() {
+  const code = pinIn.map(i => i.value).join('');
+  if (code.length < 4) return;
+  if (hash(LOCK.salt + code) === LOCK.hash) {
+    const bytes = atob(LOCK.masked).split('').map((c, i) => String.fromCharCode(c.charCodeAt(0) ^ code.charCodeAt(i % 4)));
+    const name = bytes.join('');
+    $('#crushLock').hidden = true; $('#crushOpen').hidden = false;
+    $('#crushName').innerHTML = name.split('').map((c, i) => `<span style="animation-delay:${i * 110}ms">${esc(c)}</span>`).join('');
+    flag('cracker'); confetti({ n: 160, glyph: '💖' });
+    setTimeout(() => confetti({ n: 120, glyph: '💗' }), 600);
+  } else {
+    tries++;
+    pinBox.classList.remove('shake'); void pinBox.offsetWidth; pinBox.classList.add('shake');
+    $('#pinMsg').textContent = tries >= 3 ? 'Nope. Hint: it is a year, and it is not in the page.' : 'Wrong password. Try again.';
+    setTimeout(() => { pinIn.forEach(i => { i.value = ''; }); pinIn[0].focus(); }, 380);
+  }
+}
+pinIn.forEach((inp, i) => {
+  inp.addEventListener('input', () => {
+    inp.value = inp.value.replace(/\D/g, '').slice(-1);
+    if (inp.value && i < 3) pinIn[i + 1].focus();
+    checkPin();
+  });
+  inp.addEventListener('keydown', e => {
+    if (e.key === 'Backspace' && !inp.value && i > 0) { pinIn[i - 1].focus(); pinIn[i - 1].value = ''; }
+    if (e.key === 'ArrowLeft' && i > 0) pinIn[i - 1].focus();
+    if (e.key === 'ArrowRight' && i < 3) pinIn[i + 1].focus();
+  });
+  inp.addEventListener('paste', e => {
+    const t = (e.clipboardData.getData('text') || '').replace(/\D/g, '').slice(0, 4);
+    if (!t) return; e.preventDefault();
+    t.split('').forEach((c, k) => { pinIn[k].value = c; });
+    pinIn[Math.min(t.length, 3)].focus(); checkPin();
+  });
+});
+
+/* ======================= click delegation ======================= */
+document.addEventListener('click', e => {
+  const t = e.target;
+  const favBtn = t.closest('[data-fav]');
+  if (favBtn) { e.stopPropagation(); toggleFav(favBtn.dataset.fav); return; }
+  const rail = t.closest('.rail-btn'); if (rail) { go(rail.dataset.tab); return; }
+  const goBtn = t.closest('[data-go]'); if (goBtn) { go(goBtn.dataset.go); return; }
+  const ch = t.closest('[data-cat]:not([data-act])'); if (ch && ch.classList.contains('chip-b')) { activeCat = ch.dataset.cat; letter = ''; refreshLib(); return; }
+  const lt = t.closest('[data-letter]'); if (lt) { letter = lt.dataset.letter; refreshLib(); return; }
+  const set = t.closest('[data-set]');
+  if (set && !set.disabled) {
+    const k = set.dataset.set, v = set.dataset.v;
+    S.settings[k] = v; save(); applySettings();
+    if (k === 'theme' && v !== 'light') flag('stylist');
+    if (k === 'theme' || k === 'accent') flag('stylist');
+    if (k === 'view') { PAGES[CUR_TAB()](); return; }
+    if (CUR_TAB() === 'settings') PAGES.settings();
+    return;
+  }
+  const act = t.closest('[data-act]');
+  if (act) { doAct(act); return; }
+  const card = t.closest('[data-k]');
+  if (card) { play(card.dataset.k); return; }
+});
+document.addEventListener('keydown', e => {
+  if ((e.key === 'Enter' || e.key === ' ') && e.target.matches('.card,.row[data-k],.gotd')) {
+    e.preventDefault(); const k = e.target.dataset.k; if (k) play(k);
+  }
+});
+document.addEventListener('change', e => {
+  const tg = e.target.dataset && e.target.dataset.tg;
+  if (tg) { S.settings[tg] = e.target.checked; save(); applySettings(); }
+  if (e.target.id === 'sort') { S.settings.sort = e.target.value; if (e.target.value === 'shuffle') shuffleSeed = Math.random(); save(); refreshLib(); }
+});
+document.addEventListener('input', e => {
+  if (e.target.matches('[data-name]')) { S.settings.name = e.target.value.trim() || 'Player'; save(); }
+});
+
+function doAct(a) {
+  switch (a.dataset.act) {
+    case 'retry': ensureLoaded(); PAGES.library(); break;
+    case 'resetFilters': activeCat = 'all'; letter = ''; LQ = ''; gq.value = ''; syncSearchUI(); refreshLib(); break;
+    case 'roulette': roulette(); break;
+    case 'crush': openCrush(); break;
+    case 'libcat': activeCat = a.dataset.cat; letter = ''; go('library'); break;
+    case 'playGotd': { const g = gameOfDay(); if (g) play(g.key); break; }
+    case 'randFav': { const l = S.favs.filter(k => BY[k]); if (l.length) play(l[Math.floor(Math.random() * l.length)]); break; }
+    case 'clearRecent': S.recent = []; save(); toast('History cleared', { icon: '🧹' }); PAGES[CUR_TAB()](); break;
+    case 'clearFavs': if (confirm('Remove all favorites?')) { S.favs = []; save(); updateBadges(); toast('Favorites cleared', { icon: '🧹' }); PAGES[CUR_TAB()](); } break;
+    case 'useGold': S.settings.theme = 'gold'; save(); applySettings(); toast('Gold theme on', { icon: '👑' }); break;
+    case 'glitter': findGem('glitter'); break;
+    case 'reloadGame': reloadGame(); break;
+    case 'export': {
+      const url = URL.createObjectURL(new Blob([JSON.stringify(S, null, 2)], { type: 'application/json' }));
+      const l = document.createElement('a'); l.href = url; l.download = 'niamverse-backup.json'; document.body.appendChild(l); l.click(); l.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 5000); toast('Backup downloaded', { icon: '💾' }); break;
+    }
+    case 'import': {
+      const inp = document.createElement('input'); inp.type = 'file'; inp.accept = '.json,application/json';
+      inp.onchange = () => {
+        const f = inp.files[0]; if (!f) return;
+        const r = new FileReader();
+        r.onload = () => { try { const d = DEF(); mergeState(d, JSON.parse(r.result)); S = d; save(true); applySettings(); updateBadges(); go(CUR_TAB()); toast('Backup restored', { icon: '✅' }); } catch (err) { toast('That file is not a valid backup', { icon: '⚠️' }); } };
+        r.readAsText(f);
+      };
+      inp.click(); break;
+    }
+    case 'resetAll':
+      if (confirm('Reset everything? This clears favorites, stats, and achievements.')) { S = DEF(); save(true); applySettings(); updateBadges(); go('home'); toast('Fresh start', { icon: '✨' }); }
+      break;
+  }
+}
+
+/* ======================= effects: 3D tilt, secrets ======================= */
+document.addEventListener('pointermove', e => {
+  if (!S.settings.motion || e.pointerType === 'touch') return;
+  const c = e.target.closest && e.target.closest('.card');
+  if (!c || c.closest('.list')) return;
+  const r = c.getBoundingClientRect(), x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
+  c.style.setProperty('--ry', ((x - .5) * 9).toFixed(2) + 'deg');
+  c.style.setProperty('--rx', ((.5 - y) * 9).toFixed(2) + 'deg');
+  c.style.setProperty('--mx', (x * 100) + '%'); c.style.setProperty('--my', (y * 100) + '%');
+}, { passive: true });
+document.addEventListener('pointerout', e => { const c = e.target.closest && e.target.closest('.card'); if (c) { c.style.setProperty('--rx', '0deg'); c.style.setProperty('--ry', '0deg'); } });
+
+let logoPokes = 0, logoT, verPokes = 0, verT, heartPokes = 0;
+$('#brand').addEventListener('click', () => {
+  go('home'); logoPokes++; clearTimeout(logoT); logoT = setTimeout(() => { logoPokes = 0; }, 1600);
+  if (logoPokes >= 7) { logoPokes = 0; findGem('logo'); document.body.classList.toggle('rainbow'); setTimeout(() => document.body.classList.remove('rainbow'), 6000); }
+});
+document.addEventListener('click', e => {
+  if (e.target.id === 'ver') { verPokes++; clearTimeout(verT); verT = setTimeout(() => { verPokes = 0; }, 1500); if (verPokes >= 3) { verPokes = 0; findGem('version'); } }
+});
+$('#footHeart').addEventListener('click', () => {
+  heartPokes++; confetti({ n: 14, glyph: '❤️', x: innerWidth / 2, y: innerHeight - 60 });
+  if (heartPokes >= 3) { heartPokes = 0; findGem('heart'); }
+});
+const KONAMI = ['arrowup', 'arrowup', 'arrowdown', 'arrowdown', 'arrowleft', 'arrowright', 'arrowleft', 'arrowright', 'b', 'a'];
+let kpos = 0;
+
+/* ======================= keyboard ======================= */
+addEventListener('keydown', e => {
+  const k = e.key.toLowerCase();
+  kpos = (k === KONAMI[kpos]) ? kpos + 1 : (k === KONAMI[0] ? 1 : 0);
+  if (kpos === KONAMI.length) { kpos = 0; findGem('konami'); }
+  if (e.key === 'Escape') {
+    if ($$('.modal.open').length) { closeModals(); return; }
+    if (playerEl.classList.contains('open') && !document.fullscreenElement) { if (playerEl.classList.contains('theater')) theater(false); else closePlayer(); }
+    return;
+  }
+  if (isTyping(e.target) || e.ctrlKey || e.metaKey || e.altKey) return;
+  const open = playerEl.classList.contains('open');
+  if (k === '/' && !open) { e.preventDefault(); gq.focus(); gq.select(); return; }
+  if (k === '?') { openModal('mKeys'); return; }
+  if (open) {
+    if (k === 'f') { e.preventDefault(); fullscreenGame(); }
+    else if (k === 't') theater();
+    else if (k === 's') $('#pSide').click();
+    return;
+  }
+  if (k === 'r') { roulette(); return; }
+  if (/^[1-8]$/.test(k)) go(TABS[+k - 1]);
+});
+
+/* ======================= top bar buttons ======================= */
+$('#btnRoulette').addEventListener('click', roulette);
+$('#btnCrush').addEventListener('click', openCrush);
+$('#btnTheme').addEventListener('click', () => {
+  const order = ['light', 'dark', 'midnight', 'sunset'].concat(S.flags.gold ? ['gold'] : []);
+  const i = order.indexOf(S.settings.theme);
+  S.settings.theme = order[(i + 1) % order.length]; save(); applySettings(); flag('stylist');
+  toast('Theme: ' + S.settings.theme, { icon: '🎨', ms: 1400 });
+  if (CUR_TAB() === 'settings') PAGES.settings();
+});
+
+/* ======================= boot ======================= */
+applySettings();
+syncSearchUI();
+updateBadges();
+(function boot() {
+  const start = S.settings.remember && TABS.includes(S.tab) ? S.tab : 'home';
+  go(start);
+  if (start !== 'library') setTimeout(() => ensureLoaded(), 400);
+  checkAch();
+  console.log('%cNiamverse · Made by Niam', 'font:700 14px system-ui;color:#5b5ef4');
+})();
+</script>
+
+</body>
+</html>
