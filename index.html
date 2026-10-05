@@ -1469,7 +1469,7 @@ function checkPin() {
   } else {
     tries++;
     pinBox.classList.remove('shake'); void pinBox.offsetWidth; pinBox.classList.add('shake');
-    $('#pinMsg').textContent = tries >= 3 ? 'Nope. Hint: it is a year, and it is not in the page.' : 'Wrong password. Try again.';
+    $('#pinMsg').textContent = tries >= 3 ? 'Nope. Hint: FIGURE IT OUT SON!!' : 'Wrong password. Try again.';
     setTimeout(() => { pinIn.forEach(i => { i.value = ''; }); pinIn[0].focus(); }, 380);
   }
 }
